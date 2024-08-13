@@ -16,4 +16,5 @@ public class BattleRobotSO : ScriptableObject
     [Header("Stat")]
     public float MaxHealth;
     public float MoveSpeed;
+    public float RotateSpeed;
 }

@@ -28,7 +28,7 @@ public class Entity : MonoBehaviour
         FSM();
     }
 
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         if(StateMachine.IsUpdate) StateMachine.CurrentState.Update();
     }

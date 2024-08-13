@@ -3,62 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRobot : Entity
+public class BattleRobot : Robot
 {
-    [SerializeField] private BattleRobotSO _robotSO;
-    [SerializeField] private InputSystem _inputReader;
+    #region Component
 
-    public Vector2 Direction => EntityMovementCompo.Direction;
-    public bool IsMove       => EntityMovementCompo.IsMove;
-    public BattleRobotSO RobotSO { get; private set;}
+    private BattleRobotTransform _robotTransform;
 
-    private bool _canTranfrom = true;
-    private bool _isRobot = true;
+    #endregion
 
     protected override void Awake()
     {
         base.Awake();
 
-        RobotSO = Instantiate(_robotSO);
+        _robotTransform = new(StateMachine);
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        _inputReader.OnMoveEvent += EntityMovementCompo.SetDirection;
-        _inputReader.OnTransformEvent += TransformRobot;
+        base.OnEnable();
+
+        InputSystem.OnTransformEvent += TransformRobot;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        _inputReader.OnMoveEvent -= EntityMovementCompo.SetDirection;
-        _inputReader.OnTransformEvent -= TransformRobot;
+        base.OnDisable();
+
+        InputSystem.OnTransformEvent -= TransformRobot;
     }
 
     private void Start()
     {
         StateMachine.Init(EntityStateEnum.Open);
     }
-
-    public void TransformRobot()
+    
+    private void TransformRobot()
     {
-        if (_canTranfrom)
-        {
-            _canTranfrom = false;
-
-            if (_isRobot)
-                StateMachine.ChangeState(EntityStateEnum.ChangeRoll);
-            else
-                StateMachine.ChangeState(EntityStateEnum.StopRoll);
-
-            _isRobot = !_isRobot;
-
-            StartCoroutine(TransformCoolTime(RobotSO.TransformCoolTime));
-        }
-    }
-
-    private IEnumerator TransformCoolTime(float coolTime)
-    {
-        yield return new WaitForSeconds(coolTime);
-        _canTranfrom = true;
+        _robotTransform.TransformRobot(RobotSO.TransformCoolTime);
     }
 }

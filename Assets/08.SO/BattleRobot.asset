@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: BattleRobot
   m_EditorClassIdentifier: 
   TransformTime: 1
-  TransformCoolTime: 5
+  TransformCoolTime: 1
   ReloadTime: 5
   BulletReloadAmount: 100
   MaxHealth: 300
   MoveSpeed: 8
+  RotateSpeed: 50

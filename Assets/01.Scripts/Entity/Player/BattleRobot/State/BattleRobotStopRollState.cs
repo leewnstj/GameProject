@@ -24,7 +24,7 @@ public class BattleRobotStopRollState : RobotState
 
         if (_triggerCalled)
         {
-            _stateMachine.ChangeState(EntityStateEnum.Idle);
+            _stateMachine.ChangeState(EntityStateEnum.Walk);
         }
     }
 }

@@ -337,6 +337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityType: 1
+  _robotSO: {fileID: 11400000, guid: 028e823402c5ca84cb1fb17eeea617e9, type: 2}
   _inputReader: {fileID: 11400000, guid: e1b6144e71226dd40ad49cc2eece9866, type: 2}
 --- !u!114 &243316396
 MonoBehaviour:
@@ -347,7 +348,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 243316391}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e4ce7a8bd6320c469e727294b65fbb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f0a9b7ba4067a040923c5736b214af2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1244228858
@@ -4759,6 +4760,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9768b3c95e6f6e4badcab0726fac752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

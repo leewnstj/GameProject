@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRobotStopRollState : RobotState
+public class BattleRobotChangeRollState : RobotState
 {
-    public BattleRobotStopRollState(Entity entity, StateMachine stateMachine, string animationBoolName) : base(entity, stateMachine, animationBoolName)
+    public BattleRobotChangeRollState(Entity entity, StateMachine stateMachine, string animationBoolName) : base(entity, stateMachine, animationBoolName)
     {
     }
 
@@ -16,17 +16,15 @@ public class BattleRobotStopRollState : RobotState
     public override void Exit()
     {
         base.Exit();
-
-        IsRobot = true;
     }
 
     public override void Update()
     {
         base.Update();
 
-        if(_triggerCalled)
+        if (_triggerCalled)
         {
-            _stateMachine.ChangeState(EntityStateEnum.Idle);
+            _stateMachine.ChangeState(EntityStateEnum.Roll);
         }
     }
 }

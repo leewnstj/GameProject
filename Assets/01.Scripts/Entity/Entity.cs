@@ -22,7 +22,8 @@ public class Entity : MonoBehaviour
     {
         AnimatorCompo  = GetComponentInChildren<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody>();
-        EntityMovementCompo = GetComponent<EntityMovement>();
+
+        EntityMovementCompo = new EntityMovement(RigidbodyCompo);
 
         FSM();
     }

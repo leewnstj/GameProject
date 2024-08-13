@@ -1,10 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class EntityMovement : MonoBehaviour
+public class EntityMovement
 {
+    public EntityMovement(Rigidbody rigidbody)
+    {
+        _rigidbodyCompo = rigidbody;
+    }
+
     private Rigidbody _rigidbodyCompo;
 
     public bool IsMove => Direction != Vector2.zero;
@@ -12,12 +14,6 @@ public class EntityMovement : MonoBehaviour
     public Vector2 Direction { get; private set; }
     public float XInput { get; private set; }
     public float ZInput { get; private set; }
-
-
-    private void Awake()
-    {
-        _rigidbodyCompo = GetComponent<Rigidbody>();
-    }
 
     public void SetDirection(Vector2 direction)
     {

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRobotWalkState : RobotState
+public class BattleRobotStopRollState : RobotState
 {
-    public BattleRobotWalkState(Entity entity, StateMachine stateMachine, string animationBoolName) : base(entity, stateMachine, animationBoolName)
+    public BattleRobotStopRollState(Entity entity, StateMachine stateMachine, string animationBoolName) : base(entity, stateMachine, animationBoolName)
     {
     }
 
@@ -20,9 +20,9 @@ public class BattleRobotWalkState : RobotState
 
     public override void Update()
     {
-        _robot.EntityMovementCompo.Movement(10f);
+        base.Update();
 
-        if (!_robot.IsMove)
+        if (_triggerCalled)
         {
             _stateMachine.ChangeState(EntityStateEnum.Idle);
         }

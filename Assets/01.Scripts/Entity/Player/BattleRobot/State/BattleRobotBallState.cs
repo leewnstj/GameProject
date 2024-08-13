@@ -20,6 +20,6 @@ public class BattleRobotBallState : RobotState
 
     public override void Update()
     {
-        base.Update();
+
     }
 }

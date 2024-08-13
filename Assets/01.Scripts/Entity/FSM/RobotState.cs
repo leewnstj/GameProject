@@ -6,7 +6,6 @@ public class RobotState : State
 {
     protected BattleRobot _robot;
     protected BattleRobotSO _so => _robot.RobotSO;
-    protected float _moveSpeed => _robot.RobotSO.MoveSpeed;
 
 
     public RobotState(Entity entity, StateMachine stateMachine, string animationBoolName) : base(entity, stateMachine, animationBoolName)
@@ -18,6 +17,8 @@ public class RobotState : State
     {
         base.Update();
 
-        _robot.EntityMovementCompo.Movement(_moveSpeed);
+        _robot.EntityMovementCompo.Movement(_so.MoveSpeed);
+
+        _robot.RobotRotateCompo.RotateTowardsMouse(_so.RotateSpeed);
     }
 } 

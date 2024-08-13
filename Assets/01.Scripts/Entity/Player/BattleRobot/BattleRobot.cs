@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class BattleRobot : Robot
 {
+    public bool CanTransform { get; private set; } = false;
+
     #region Component
 
     private BattleRobotTransform _robotTransform;
@@ -36,9 +38,19 @@ public class BattleRobot : Robot
     {
         StateMachine.Init(EntityStateEnum.Open);
     }
-    
+
+    #region Transform
+
     private void TransformRobot()
     {
-        _robotTransform.TransformRobot(RobotSO.TransformCoolTime);
+        if(CanTransform)
+            _robotTransform.TransformRobot(RobotSO.TransformCoolTime);
     }
+
+    public void SetTransform(bool value)
+    {
+        CanTransform = value;
+    }
+
+    #endregion
 }

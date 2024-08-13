@@ -14,7 +14,7 @@ public class Robot : Entity
 
     #region Component
 
-    private RobotMouse _robotRotateCompo;
+    public RobotMouse RobotRotateCompo { get; private set; }
 
     #endregion
 
@@ -22,7 +22,7 @@ public class Robot : Entity
     {
         base.Awake();
 
-        _robotRotateCompo = new(transform); 
+        RobotRotateCompo = new(transform); 
         RobotSO = Instantiate(_robotSO);
     }
 
@@ -34,12 +34,5 @@ public class Robot : Entity
     protected virtual void OnDisable()
     {
         InputSystem.OnMoveEvent -= EntityMovementCompo.SetDirection;
-    }
-
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
-
-        _robotRotateCompo.RotateTowardsMouse(_robotSO.RotateSpeed);
     }
 }

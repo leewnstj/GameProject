@@ -11,6 +11,8 @@ public class BattleRobotCloseState : RobotState
     public override void Enter()
     {
         base.Enter();
+
+        _robot.SetTransform(false);
     }
 
     public override void Exit()

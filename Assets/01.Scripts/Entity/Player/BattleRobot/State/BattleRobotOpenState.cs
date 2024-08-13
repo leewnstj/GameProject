@@ -16,6 +16,8 @@ public class BattleRobotOpenState : RobotState
     public override void Exit()
     {
         base.Exit();
+
+        _robot.SetTransform(true);
     }
 
     public override void Update()

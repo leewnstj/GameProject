@@ -5,28 +5,44 @@ using UnityEngine;
 
 public class BattleRobot : Entity
 {
-    public StateMachine StateMachine { get; private set; }
+    [SerializeField] private InputSystem _inputReader;
+
+    public Vector2 Direction => EntityMovementCompo.Direction;
+    public bool IsMove       => EntityMovementCompo.IsMove;
 
     protected override void Awake()
     {
         base.Awake();
+    }
 
-        StateMachine = new StateMachine();
+    private void OnEnable()
+    {
+        _inputReader.OnMoveEvent      += EntityMovementCompo.SetDirection;
+        _inputReader.OnTransformEvent += BattleRobotTransform;
+    }
 
-        foreach (EntityStateEnum state in Enum.GetValues(typeof(EntityStateEnum)))
+    private void OnDisable()
+    {
+        _inputReader.OnMoveEvent      -= EntityMovementCompo.SetDirection;
+        _inputReader.OnTransformEvent -= BattleRobotTransform;
+    }
+
+    private void Start()
+    {
+        StateMachine.Init(EntityStateEnum.Open);
+    }
+
+    public void BattleRobotTransform()
+    {
+        RobotState curState = StateMachine.CurrentState as RobotState;
+
+        if(curState.IsRobot)
         {
-            string typeName = state.ToString();
-            Type t = Type.GetType($"Penguin{typeName}State");
-
-            State newState = Activator.CreateInstance(t, this, StateMachine, typeName) as State;
-            
-            if (newState == null)
-            {
-                Debug.LogError($"There is no script : {state}");
-                return;
-            }
-
-            StateMachine.AddState(state, newState);
+            StateMachine.ChangeState(EntityStateEnum.ChangeRoll);
+        }
+        else
+        {
+            StateMachine.ChangeState(EntityStateEnum.StopRoll);
         }
     }
 }

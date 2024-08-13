@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMachine : MonoBehaviour
+public class StateMachine
 {
     public State CurrentState { get; private set; }
 
     public Dictionary<EntityStateEnum, State> StateDictionary = new();
+
+    public bool IsUpdate { get; private set; } = true;
 
     public void Init(EntityStateEnum state)
     {
@@ -16,9 +18,17 @@ public class StateMachine : MonoBehaviour
 
     public void ChangeState(EntityStateEnum state)
     {
-        CurrentState.Exit();
-        CurrentState = StateDictionary[state];
-        CurrentState.Enter();
+        if (IsUpdate)
+        {
+            CurrentState.Exit();
+            IsUpdate = false;
+        }
+        if (!IsUpdate)
+        {
+            CurrentState = StateDictionary[state];
+            CurrentState.Enter();
+            IsUpdate = true;
+        }
     }
 
     public void AddState(EntityStateEnum stateType, State state)

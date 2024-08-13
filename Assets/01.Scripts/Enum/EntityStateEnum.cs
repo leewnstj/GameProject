@@ -18,3 +18,11 @@ public enum EntityStateEnum
 
     #endregion
 }
+
+public enum EntityType
+{
+    None = 0,
+    BattleRobot,
+    Robot,
+    Enemy
+}

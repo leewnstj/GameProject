@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class RobotMouse
+public class RobotRotation
 {
     private Transform _ownerTrm;
 
-    public RobotMouse(Transform owner)
+    public RobotRotation(Transform owner)
     {
         _ownerTrm = owner;
     }

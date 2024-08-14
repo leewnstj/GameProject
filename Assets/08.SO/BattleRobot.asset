@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 776cde0aad2c185488058596c345b03f, type: 3}
   m_Name: BattleRobot
   m_EditorClassIdentifier: 
+  MaxHealth: 300
+  MoveSpeed: 8
+  RotateSpeed: 50
+  RollSpeed: 16
   TransformTime: 1
   TransformCoolTime: 1
   ReloadTime: 5
   BulletReloadAmount: 100
-  MaxHealth: 300
-  MoveSpeed: 8
-  RotateSpeed: 50

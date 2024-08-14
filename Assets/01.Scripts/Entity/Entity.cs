@@ -3,30 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity : MonoBehaviour
+public abstract class Entity : MonoBehaviour
 {
     [SerializeField] private EntityType _entityType;
 
     #region Component
 
-    public Animator  AnimatorCompo  { get; set; }
+    public Animator AnimatorCompo { get; set; }
     public Rigidbody RigidbodyCompo { get; set; }
     public EntityMovement EntityMovementCompo { get; set; }
 
     #endregion
 
-    public EntityType   EntityType => _entityType;
+    public EntityType EntityType => _entityType;
     public StateMachine StateMachine { get; private set; }
 
     protected virtual void Awake()
     {
-        AnimatorCompo  = GetComponentInChildren<Animator>();
+        AnimatorCompo = GetComponentInChildren<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody>();
 
         EntityMovementCompo = new EntityMovement(RigidbodyCompo);
 
         FSM();
     }
+
+    private void OnEnable()
+    {
+        SubscribeEvent();
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeEvent();
+    }
+
+    protected abstract void SubscribeEvent();
+
+    protected abstract void UnsubscribeEvent();
 
     protected virtual void FixedUpdate()
     {

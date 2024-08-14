@@ -3,7 +3,7 @@ public class BattleRobotTransform
     private StateMachine _ownerStateMachine;
 
     private bool _canTranfrom = true;
-    private bool _isRobot = true;
+    private bool _isRobotForm = true;
 
     public BattleRobotTransform(StateMachine owner)
     {
@@ -12,18 +12,22 @@ public class BattleRobotTransform
 
     public void TransformRobot(float transformCoolTime)
     {
-        if (_canTranfrom)
-        {
-            _canTranfrom = false;
+        if (!_canTranfrom) return;
 
-            if (_isRobot)
-                _ownerStateMachine.ChangeState(EntityStateEnum.ChangeRoll);
-            else
-                _ownerStateMachine.ChangeState(EntityStateEnum.StopRoll);
+        _canTranfrom = false;
 
-            _isRobot = !_isRobot;
+        ChangeStateBasedOnForm();
 
-            CoroutineUtil.CallWaitForSeconds(transformCoolTime, () => _canTranfrom = true);
-        }
+        _isRobotForm = !_isRobotForm;
+
+        CoroutineUtil.CallWaitForSeconds(transformCoolTime, () => _canTranfrom = true);
+    }
+
+    private void ChangeStateBasedOnForm()
+    {
+        if (_isRobotForm)
+            _ownerStateMachine.ChangeState(EntityStateEnum.ChangeRoll);
+        else
+            _ownerStateMachine.ChangeState(EntityStateEnum.StopRoll);
     }
 }

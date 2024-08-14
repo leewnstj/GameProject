@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,7 +6,11 @@ using UnityEngine.InputSystem;
 public class InputSystem : ScriptableObject, PlayerInput.IPlayerActionsActions
 {
     public event Action<Vector2> OnMoveEvent      = null;
+
     public event Action          OnTransformEvent = null;
+
+    public event Action          OnLeftMouseDownEvent = null;
+    public event Action          OnLeftMouseUpEvent = null;
 
     protected PlayerInput _playerInput;
 
@@ -42,6 +43,19 @@ public class InputSystem : ScriptableObject, PlayerInput.IPlayerActionsActions
         if (context.performed)
         {
             OnTransformEvent?.Invoke();
+        }
+    }
+
+    public void OnLeftMouse(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            OnLeftMouseDownEvent?.Invoke();
+        }
+
+        if(context.canceled)
+        {
+            OnLeftMouseUpEvent?.Invoke();
         }
     }
 }

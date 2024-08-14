@@ -14,7 +14,7 @@ public class Robot : Entity
 
     #region Component
 
-    public RobotMouse RobotRotateCompo { get; private set; }
+    public RobotRotation RobotRotateCompo { get; private set; }
 
     #endregion
 
@@ -26,12 +26,12 @@ public class Robot : Entity
         RobotSO = Instantiate(_robotSO);
     }
 
-    protected virtual void OnEnable()
+    protected override void SubscribeEvent()
     {
         InputSystem.OnMoveEvent += EntityMovementCompo.SetDirection;
     }
 
-    protected virtual void OnDisable()
+    protected override void UnsubscribeEvent()
     {
         InputSystem.OnMoveEvent -= EntityMovementCompo.SetDirection;
     }

@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class EntityMovement
 {
-    public EntityMovement(Rigidbody rigidbody)
+    private Rigidbody _rigidbodyCompo;
+    private float _friction;
+
+    public EntityMovement(Rigidbody rigidbody, float friction = 0.95f)
     {
         _rigidbodyCompo = rigidbody;
+        _friction = friction;
     }
-
-    private Rigidbody _rigidbodyCompo;
 
     public bool IsMove => Direction != Vector2.zero;
 
@@ -23,11 +25,17 @@ public class EntityMovement
         Direction = direction;
     }
 
-    public void Movement(float speed)
+    public void Movement(float speed, bool isSliding = false)
     {
-        float y = _rigidbodyCompo.velocity.y;
-
-        _rigidbodyCompo.velocity = new Vector3(XInput * speed, y, ZInput * speed);
+        if (IsMove)
+        {
+            float y = _rigidbodyCompo.velocity.y;
+            _rigidbodyCompo.velocity = new Vector3(XInput * speed, y, ZInput * speed);
+        }
+        else if(isSliding && !IsMove)
+        {
+            ApplySliding();
+        }
     }
 
     public void StopImmediately()
@@ -35,5 +43,22 @@ public class EntityMovement
         Direction = Vector2.zero;
         XInput = 0f;
         ZInput = 0f;
+
+        _rigidbodyCompo.velocity = Vector3.zero;
+    }
+
+    private void ApplySliding()
+    {
+        Vector3 velocity = _rigidbodyCompo.velocity;
+        velocity.x *= _friction;
+        velocity.z *= _friction;
+
+        if (velocity.magnitude < 0.1f)
+        {
+            velocity.x = 0f;
+            velocity.z = 0f;
+        }
+
+        _rigidbodyCompo.velocity = velocity;
     }
 }

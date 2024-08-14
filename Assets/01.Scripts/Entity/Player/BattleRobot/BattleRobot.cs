@@ -20,16 +20,16 @@ public class BattleRobot : Robot
         _robotTransform = new(StateMachine);
     }
 
-    protected override void OnEnable()
+    protected override void SubscribeEvent()
     {
-        base.OnEnable();
+        base.SubscribeEvent();
 
         InputSystem.OnTransformEvent += TransformRobot;
     }
 
-    protected override void OnDisable()
+    protected override void UnsubscribeEvent()
     {
-        base.OnDisable();
+        base.UnsubscribeEvent();
 
         InputSystem.OnTransformEvent -= TransformRobot;
     }
@@ -51,6 +51,12 @@ public class BattleRobot : Robot
     {
         CanTransform = value;
     }
+
+    #endregion
+
+    #region Shoot
+
+
 
     #endregion
 }

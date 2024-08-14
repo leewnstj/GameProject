@@ -44,6 +44,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftMouse"",
+                    ""type"": ""Button"",
+                    ""id"": ""2cb26c4a-05d6-4ff4-b310-657fcdc51e7e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -112,6 +121,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Transform"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72411f44-4a9b-4ce9-9ea2-3deab2a10df4"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -139,6 +159,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerActions = asset.FindActionMap("PlayerActions", throwIfNotFound: true);
         m_PlayerActions_Move = m_PlayerActions.FindAction("Move", throwIfNotFound: true);
         m_PlayerActions_Transform = m_PlayerActions.FindAction("Transform", throwIfNotFound: true);
+        m_PlayerActions_LeftMouse = m_PlayerActions.FindAction("LeftMouse", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -202,12 +223,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<IPlayerActionsActions> m_PlayerActionsActionsCallbackInterfaces = new List<IPlayerActionsActions>();
     private readonly InputAction m_PlayerActions_Move;
     private readonly InputAction m_PlayerActions_Transform;
+    private readonly InputAction m_PlayerActions_LeftMouse;
     public struct PlayerActionsActions
     {
         private @PlayerInput m_Wrapper;
         public PlayerActionsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerActions_Move;
         public InputAction @Transform => m_Wrapper.m_PlayerActions_Transform;
+        public InputAction @LeftMouse => m_Wrapper.m_PlayerActions_LeftMouse;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -223,6 +246,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Transform.started += instance.OnTransform;
             @Transform.performed += instance.OnTransform;
             @Transform.canceled += instance.OnTransform;
+            @LeftMouse.started += instance.OnLeftMouse;
+            @LeftMouse.performed += instance.OnLeftMouse;
+            @LeftMouse.canceled += instance.OnLeftMouse;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -233,6 +259,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Transform.started -= instance.OnTransform;
             @Transform.performed -= instance.OnTransform;
             @Transform.canceled -= instance.OnTransform;
+            @LeftMouse.started -= instance.OnLeftMouse;
+            @LeftMouse.performed -= instance.OnLeftMouse;
+            @LeftMouse.canceled -= instance.OnLeftMouse;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -263,5 +292,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnTransform(InputAction.CallbackContext context);
+        void OnLeftMouse(InputAction.CallbackContext context);
     }
 }

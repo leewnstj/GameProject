@@ -3,19 +3,19 @@ using UnityEngine;
 public class EntityMovement
 {
     private Rigidbody _rigidbodyCompo;
-    private float _friction;
+    private float     _friction;
 
     public EntityMovement(Rigidbody rigidbody, float friction = 0.95f)
     {
         _rigidbodyCompo = rigidbody;
-        _friction = friction;
+        _friction       = friction;
     }
 
     public bool IsMove => Direction != Vector2.zero;
 
     public Vector2 Direction { get; private set; }
-    public float XInput { get; private set; }
-    public float ZInput { get; private set; }
+    public float XInput      { get; private set; }
+    public float ZInput      { get; private set; }
 
     public void SetDirection(Vector2 direction)
     {
@@ -30,6 +30,7 @@ public class EntityMovement
         if (IsMove)
         {
             float y = _rigidbodyCompo.velocity.y;
+
             _rigidbodyCompo.velocity = new Vector3(XInput * speed, y, ZInput * speed);
         }
         else if(isSliding && !IsMove)

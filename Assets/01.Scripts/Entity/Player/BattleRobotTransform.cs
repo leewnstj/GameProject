@@ -1,5 +1,10 @@
+/// <summary>
+/// 전투 로봇의 모드(전투모드, 공모드)를 바꿔주는 
+/// </summary>
 public class BattleRobotTransform
 {
+
+
     private StateMachine _ownerStateMachine;
 
     private bool _canTranfrom = true;

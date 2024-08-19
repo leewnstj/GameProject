@@ -324,6 +324,7 @@ GameObject:
   - component: {fileID: 243316394}
   - component: {fileID: 243316393}
   - component: {fileID: 243316395}
+  - component: {fileID: 243316396}
   m_Layer: 0
   m_Name: BattleRobot
   m_TagString: Untagged
@@ -411,6 +412,36 @@ MonoBehaviour:
   _entityType: 1
   _inputReader: {fileID: 11400000, guid: e1b6144e71226dd40ad49cc2eece9866, type: 2}
   _robotSO: {fileID: 11400000, guid: 028e823402c5ca84cb1fb17eeea617e9, type: 2}
+--- !u!114 &243316396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243316391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc64f4d3fcb9d143bd65baa51c19a77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnLeftMouseDownEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 498240302}
+        m_TargetAssemblyTypeName: BattleRobotAttack, Assembly-CSharp
+        m_MethodName: ShootBullet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnLeftMouseUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &420786206
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,7 +497,6 @@ GameObject:
   m_Component:
   - component: {fileID: 498240301}
   - component: {fileID: 498240302}
-  - component: {fileID: 498240303}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -509,18 +539,6 @@ MonoBehaviour:
   _targetLayer:
     serializedVersion: 2
     m_Bits: 0
---- !u!114 &498240303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 498240300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1fd0b489ff512e45a6835371b4136e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1006146240
 GameObject:
   m_ObjectHideFlags: 0

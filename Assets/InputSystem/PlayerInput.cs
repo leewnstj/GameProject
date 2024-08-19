@@ -53,33 +53,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""1"",
-                    ""type"": ""Button"",
-                    ""id"": ""8b82af60-aa32-43c4-913f-8b6fccec4962"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""2"",
-                    ""type"": ""Button"",
-                    ""id"": ""0cb92aa9-28c3-4b39-9710-b0f75d330933"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""3"",
-                    ""type"": ""Button"",
-                    ""id"": ""1d9312de-2d3f-45fa-91cb-39ab2b0b7bb2"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -159,39 +132,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""LeftMouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5af0c625-8b35-4c0a-9d80-d974d7d21462"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0c7c6590-182b-45a8-a29f-c01b0574e5f9"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6d5e6e78-6b8e-43fb-843a-af714c2c1737"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""3"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -220,9 +160,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerActions_Move = m_PlayerActions.FindAction("Move", throwIfNotFound: true);
         m_PlayerActions_Transform = m_PlayerActions.FindAction("Transform", throwIfNotFound: true);
         m_PlayerActions_LeftMouse = m_PlayerActions.FindAction("LeftMouse", throwIfNotFound: true);
-        m_PlayerActions__1 = m_PlayerActions.FindAction("1", throwIfNotFound: true);
-        m_PlayerActions__2 = m_PlayerActions.FindAction("2", throwIfNotFound: true);
-        m_PlayerActions__3 = m_PlayerActions.FindAction("3", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -287,9 +224,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Move;
     private readonly InputAction m_PlayerActions_Transform;
     private readonly InputAction m_PlayerActions_LeftMouse;
-    private readonly InputAction m_PlayerActions__1;
-    private readonly InputAction m_PlayerActions__2;
-    private readonly InputAction m_PlayerActions__3;
     public struct PlayerActionsActions
     {
         private @PlayerInput m_Wrapper;
@@ -297,9 +231,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_PlayerActions_Move;
         public InputAction @Transform => m_Wrapper.m_PlayerActions_Transform;
         public InputAction @LeftMouse => m_Wrapper.m_PlayerActions_LeftMouse;
-        public InputAction @_1 => m_Wrapper.m_PlayerActions__1;
-        public InputAction @_2 => m_Wrapper.m_PlayerActions__2;
-        public InputAction @_3 => m_Wrapper.m_PlayerActions__3;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -318,15 +249,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @LeftMouse.started += instance.OnLeftMouse;
             @LeftMouse.performed += instance.OnLeftMouse;
             @LeftMouse.canceled += instance.OnLeftMouse;
-            @_1.started += instance.On_1;
-            @_1.performed += instance.On_1;
-            @_1.canceled += instance.On_1;
-            @_2.started += instance.On_2;
-            @_2.performed += instance.On_2;
-            @_2.canceled += instance.On_2;
-            @_3.started += instance.On_3;
-            @_3.performed += instance.On_3;
-            @_3.canceled += instance.On_3;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -340,15 +262,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @LeftMouse.started -= instance.OnLeftMouse;
             @LeftMouse.performed -= instance.OnLeftMouse;
             @LeftMouse.canceled -= instance.OnLeftMouse;
-            @_1.started -= instance.On_1;
-            @_1.performed -= instance.On_1;
-            @_1.canceled -= instance.On_1;
-            @_2.started -= instance.On_2;
-            @_2.performed -= instance.On_2;
-            @_2.canceled -= instance.On_2;
-            @_3.started -= instance.On_3;
-            @_3.performed -= instance.On_3;
-            @_3.canceled -= instance.On_3;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -380,8 +293,5 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnTransform(InputAction.CallbackContext context);
         void OnLeftMouse(InputAction.CallbackContext context);
-        void On_1(InputAction.CallbackContext context);
-        void On_2(InputAction.CallbackContext context);
-        void On_3(InputAction.CallbackContext context);
     }
 }

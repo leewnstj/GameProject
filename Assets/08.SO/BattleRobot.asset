@@ -17,4 +17,6 @@ MonoBehaviour:
   RotateSpeed: 50
   RollSpeed: 16
   TransformTime: 1
-  TransformCoolTime: 3
+  TransformCoolTime: 1
+  ReloadTime: 5
+  BulletReloadAmount: 100

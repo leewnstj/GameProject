@@ -5,6 +5,13 @@ using UnityEngine.InputSystem;
 [CreateAssetMenu(menuName = "SO/InputReader")]
 public class InputSystem : ScriptableObject, PlayerInput.IPlayerActionsActions
 {
+    public event Action<Vector2> OnMoveEvent      = null;
+
+    public event Action          OnTransformEvent = null;
+
+    public event Action          OnLeftMouseDownEvent = null;
+    public event Action          OnLeftMouseUpEvent = null;
+
     protected PlayerInput _playerInput;
 
     private void OnEnable()
@@ -23,11 +30,11 @@ public class InputSystem : ScriptableObject, PlayerInput.IPlayerActionsActions
         if (context.performed)
         {
             Vector2 movePos = context.ReadValue<Vector2>();
-            PlayerHub.OnMoveEvent?.Invoke(movePos);
+            OnMoveEvent?.Invoke(movePos);
         }
         else if (context.canceled)
         {
-            PlayerHub.OnMoveEvent?.Invoke(Vector2.zero);
+            OnMoveEvent?.Invoke(Vector2.zero);
         }
     }
 
@@ -35,7 +42,7 @@ public class InputSystem : ScriptableObject, PlayerInput.IPlayerActionsActions
     {
         if (context.performed)
         {
-            PlayerHub.OnTransformEvent?.Invoke();
+            OnTransformEvent?.Invoke();
         }
     }
 
@@ -43,24 +50,12 @@ public class InputSystem : ScriptableObject, PlayerInput.IPlayerActionsActions
     {
         if(context.started)
         {
-            PlayerHub.OnLeftMouseDownEvent?.Invoke();
+            OnLeftMouseDownEvent?.Invoke();
         }
 
         if(context.canceled)
         {
-            PlayerHub.OnLeftMouseUpEvent?.Invoke();
+            OnLeftMouseUpEvent?.Invoke();
         }
-    }
-
-    public void On_1(InputAction.CallbackContext context)
-    {
-    }
-
-    public void On_2(InputAction.CallbackContext context)
-    {
-    }
-
-    public void On_3(InputAction.CallbackContext context)
-    {
     }
 }

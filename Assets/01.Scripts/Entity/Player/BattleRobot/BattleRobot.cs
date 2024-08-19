@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRobot : Player
+public class BattleRobot : Robot
 {
     public bool CanTransform { get; private set; } = false;
 
@@ -24,14 +24,14 @@ public class BattleRobot : Player
     {
         base.SubscribeEvent();
 
-        PlayerHub.OnTransformEvent += TransformRobot;
+        InputSystem.OnTransformEvent += TransformRobot;
     }
 
     protected override void UnsubscribeEvent()
     {
         base.UnsubscribeEvent();
 
-        PlayerHub.OnTransformEvent -= TransformRobot;
+        InputSystem.OnTransformEvent -= TransformRobot;
     }
 
     private void Start()

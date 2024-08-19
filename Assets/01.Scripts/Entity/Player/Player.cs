@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Robot : Entity
+public class Player : Entity
 {
     [SerializeField] private InputSystem   _inputReader;
     [SerializeField] private BattleRobotSO _robotSO;
 
     public bool IsMove => EntityMovementCompo.IsMove;
 
-    public InputSystem InputSystem => _inputReader;
     public BattleRobotSO RobotSO   { get; private set; }
 
     #region Component
@@ -28,11 +27,11 @@ public class Robot : Entity
 
     protected override void SubscribeEvent()
     {
-        InputSystem.OnMoveEvent += EntityMovementCompo.SetDirection;
+        PlayerHub.OnMoveEvent += EntityMovementCompo.SetDirection;
     }
 
     protected override void UnsubscribeEvent()
     {
-        InputSystem.OnMoveEvent -= EntityMovementCompo.SetDirection;
+        PlayerHub.OnMoveEvent -= EntityMovementCompo.SetDirection;
     }
 }

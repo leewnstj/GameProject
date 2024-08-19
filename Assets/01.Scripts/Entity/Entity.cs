@@ -3,76 +3,107 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 추상 클래스 Entity는 PoolableMono 및 IEventPublisher 인터페이스를 상속받는다.
 public abstract class Entity : PoolableMono
 {
-    [SerializeField] private EntityType _entityType;
+    [SerializeField] private EntityType _entityType;  // Entity의 타입을 나타낸다.
+    [SerializeField] protected BattleRobotSO _robotSO;
 
-    #region Component
+    #region 컴포넌트 선언
 
-    public Animator AnimatorCompo { get; set; }
-    public Rigidbody RigidbodyCompo { get; set; }
-    public EntityMovement EntityMovementCompo { get; set; }
+    public Animator AnimatorCompo { get; private set; }  // Animator 컴포넌트
+    public Rigidbody RigidbodyCompo { get; private set; }  // Rigidbody 컴포넌트
+    public EntityMovement EntityMovementCompo { get; private set; }  // EntityMovement 컴포넌트
+    public EventFactory EventFactoryCompo { get; private set; }
 
     #endregion
 
     public EntityType EntityType => _entityType;
+
     public StateMachine StateMachine { get; private set; }
 
+    private IEventPublisher[] _eventPublishers;
+
+    // 객체가 생성될 때 호출되는 메서드
     protected virtual void Awake()
     {
+        // Factory 초기화
+        EventFactoryCompo = new EventFactory();
+
+        // 컴포넌트 초기화
         AnimatorCompo = GetComponentInChildren<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody>();
 
-        EntityMovementCompo = new EntityMovement(RigidbodyCompo);
+        // 자식 오브젝트에 있는 IEventPublisher 컴포넌트 가져오기
+        _eventPublishers = GetComponentsInChildren<IEventPublisher>();
 
-        FSM();
+        // 상태 머신 초기화
+        InitializeStateMachine();
     }
 
     private void OnEnable()
     {
-        SubscribeEvent();
+        SubscribeAllEvents();
     }
 
     private void OnDisable()
     {
-        UnsubscribeEvent();
+        UnsubscribeAllEvents();
     }
 
-    protected abstract void SubscribeEvent();
+    private void SubscribeAllEvents()
+    {
+        foreach (var publisher in _eventPublishers)
+        {
+            publisher.SubscribeEvent();
+        }
+    }
 
-    protected abstract void UnsubscribeEvent();
+    private void UnsubscribeAllEvents()
+    {
+        foreach (var publisher in _eventPublishers)
+        {
+            publisher.UnSubscribeEvent();
+        }
+    }
+
 
     protected virtual void FixedUpdate()
     {
-        if(StateMachine.IsUpdate) StateMachine.CurrentState.Update();
+        if (StateMachine.IsUpdate)
+        {
+            StateMachine.CurrentState.Update();
+        }
     }
 
-    protected void FSM()
+
+    protected void InitializeStateMachine()
     {
         StateMachine = new StateMachine();
 
-        foreach (EntityStateEnum state in Enum.GetValues(typeof(EntityStateEnum)))
+        foreach (EntityStateEnum stateEnum in Enum.GetValues(typeof(EntityStateEnum)))
         {
-            string typeName = state.ToString();
-            Type type = Type.GetType($"{_entityType.ToString()}{typeName}State");
+            string stateName = stateEnum.ToString();
+            Type stateType = Type.GetType($"{_entityType}{stateName}State");
 
-            if (type == null)
+            if (stateType == null)
             {
-                Debug.LogError($"Type not found: {_entityType.ToString()}{typeName}State");
-                return;
+                Debug.LogError($"상태 타입을 찾을 수 없습니다: {_entityType}{stateName}State");
+                continue;
             }
 
-            State newState = Activator.CreateInstance(type, this, StateMachine, typeName) as State;
+            State newState = Activator.CreateInstance(stateType, this, StateMachine, stateName) as State;
 
             if (newState == null)
             {
-                Debug.LogError($"There is no script : {state}");
-                return;
+                Debug.LogError($"해당 스크립트가 없습니다: {stateEnum}");
+                continue;
             }
 
-            StateMachine.AddState(state, newState);
+            StateMachine.AddState(stateEnum, newState);
         }
     }
+
 
     public void AnimationTrigger()
     {

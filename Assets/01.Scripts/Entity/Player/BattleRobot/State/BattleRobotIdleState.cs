@@ -12,7 +12,7 @@ public class BattleRobotIdleState : RobotState
     {
         base.Enter();
 
-        _robot.EntityMovementCompo.StopImmediately();
+        _robot.PlayerMovementCompo.StopImmediately();
     }
 
     public override void Exit()

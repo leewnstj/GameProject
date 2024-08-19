@@ -20,8 +20,6 @@ public class BattleRobotRollState : RobotState
 
     public override void Update()
     {
-        _robot.EntityMovementCompo.Movement(_so.RollSpeed, true);
-
-        _robot.RobotRotateCompo.RotateTowardsMouse(_so.RotateSpeed);
+        _robot.PlayerMovementCompo.Movement(_so.RollSpeed);
     }
 }

@@ -17,21 +17,8 @@ public class BattleRobot : Player
     {
         base.Awake();
 
-        _robotTransform = new(StateMachine);
-    }
-
-    protected override void SubscribeEvent()
-    {
-        base.SubscribeEvent();
-
-        PlayerHub.OnTransformEvent += TransformRobot;
-    }
-
-    protected override void UnsubscribeEvent()
-    {
-        base.UnsubscribeEvent();
-
-        PlayerHub.OnTransformEvent -= TransformRobot;
+        _robotTransform = EventFactoryCompo.CreateEntityComponent<BattleRobotTransform>();
+        _robotTransform.SetInit(StateMachine, RobotSO.TransformCoolTime);
     }
 
     private void Start()
@@ -39,24 +26,8 @@ public class BattleRobot : Player
         StateMachine.Init(EntityStateEnum.Open);
     }
 
-    #region Transform
-
-    private void TransformRobot()
-    {
-        if(CanTransform)
-            _robotTransform.TransformRobot(RobotSO.TransformCoolTime);
-    }
-
     public void SetTransform(bool value)
     {
-        CanTransform = value;
+        _robotTransform.SetTransform(value);
     }
-
-    #endregion
-
-    #region Shoot
-
-
-
-    #endregion
 }

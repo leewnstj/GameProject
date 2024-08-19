@@ -54,13 +54,25 @@ public class InputSystem : ScriptableObject, PlayerInput.IPlayerActionsActions
 
     public void On_1(InputAction.CallbackContext context)
     {
+        if(context.performed)
+        {
+            PlayerHub.OnChangedWeaponInputEvent?.Invoke(0);
+        }
     }
 
     public void On_2(InputAction.CallbackContext context)
     {
+        if (context.performed)
+        {
+            PlayerHub.OnChangedWeaponInputEvent?.Invoke(1);
+        }
     }
 
     public void On_3(InputAction.CallbackContext context)
     {
+        if (context.performed)
+        {
+            PlayerHub.OnChangedWeaponInputEvent?.Invoke(2);
+        }
     }
 }

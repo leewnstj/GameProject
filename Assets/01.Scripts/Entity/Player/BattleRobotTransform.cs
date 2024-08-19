@@ -1,31 +1,51 @@
 /// <summary>
 /// 전투 로봇의 모드(전투모드, 공모드)를 바꿔주는 
 /// </summary>
-public class BattleRobotTransform
+public class BattleRobotTransform : IEventPublisher
 {
-
-
     private StateMachine _ownerStateMachine;
+    protected float _coolTime;
 
-    private bool _canTranfrom = true;
+    private bool _coolTimeComplete = true;
     private bool _isRobotForm = true;
+    private bool _canTransform;
 
-    public BattleRobotTransform(StateMachine owner)
+    public void SetInit(StateMachine owner, float coolTime)
     {
         _ownerStateMachine = owner;
+
+        _coolTime = coolTime;
+    }
+
+    public void SubscribeEvent()
+    {
+        PlayerHub.OnTransformEvent += TransformRobot;
+    }
+
+    public void UnSubscribeEvent()
+    {
+        PlayerHub.OnTransformEvent -= TransformRobot;
+    }
+
+    public void SetTransform(bool value) => _canTransform = value;
+
+    private void TransformRobot()
+    {
+        if (_canTransform)
+            TransformRobot(_coolTime);
     }
 
     public void TransformRobot(float transformCoolTime)
     {
-        if (!_canTranfrom) return;
+        if (!_coolTimeComplete) return;
 
-        _canTranfrom = false;
+        _coolTimeComplete = false;
 
         ChangeStateBasedOnForm();
 
         _isRobotForm = !_isRobotForm;
 
-        CoroutineUtil.CallWaitForSeconds(transformCoolTime, () => _canTranfrom = true);
+        CoroutineUtil.CallWaitForSeconds(transformCoolTime, () => _coolTimeComplete = true);
     }
 
     private void ChangeStateBasedOnForm()

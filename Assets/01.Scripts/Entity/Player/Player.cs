@@ -5,15 +5,16 @@ using UnityEngine;
 public class Player : Entity
 {
     [SerializeField] private InputSystem   _inputReader;
-    [SerializeField] private BattleRobotSO _robotSO;
 
-    public bool IsMove => EntityMovementCompo.IsMove;
+    public bool IsMove => PlayerMovementCompo.IsMove;
 
     public BattleRobotSO RobotSO   { get; private set; }
 
     #region Component
 
+    public PlayerMovement PlayerMovementCompo { get; private set; }
     public RobotRotation RobotRotateCompo { get; private set; }
+    public ChangeWeapon ChangedWeaponCompo { get; private set; }
 
     #endregion
 
@@ -21,17 +22,23 @@ public class Player : Entity
     {
         base.Awake();
 
-        RobotRotateCompo = new(transform); 
+        RobotRotateCompo = new(transform);
+
+        ChangedWeaponCompo = EventFactoryCompo.CreateEntityComponent<ChangeWeapon>();
+        //ChangedWeaponCompo.SetInit();
+
+        PlayerMovementCompo = EventFactoryCompo.CreateEntityComponent<PlayerMovement>();
+        PlayerMovementCompo.Init(RigidbodyCompo);
+
         RobotSO = Instantiate(_robotSO);
     }
 
-    protected override void SubscribeEvent()
+    protected override void FixedUpdate()
     {
-        PlayerHub.OnMoveEvent += EntityMovementCompo.SetDirection;
+        base.FixedUpdate();
+
+        RobotRotateCompo.RotateTowardsMouse(_robotSO.RotateSpeed);
     }
 
-    protected override void UnsubscribeEvent()
-    {
-        PlayerHub.OnMoveEvent -= EntityMovementCompo.SetDirection;
-    }
+    public void SetRotation(bool value) => RobotRotateCompo.SetRotation(value);
 }

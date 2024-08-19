@@ -13,6 +13,7 @@ public delegate void TransformEvent();
 public delegate void MoveEvent(Vector2 movePos);
 
 public delegate void ChangeWeaponEvent(WeaponType type);
+public delegate void ChangeWeaponInputEvent(int index);
 
 #endregion
 
@@ -26,4 +27,5 @@ public static class PlayerHub
     public static MoveEvent OnMoveEvent;
 
     public static ChangeWeaponEvent OnChangedWeaponEvent;
+    public static ChangeWeaponInputEvent OnChangedWeaponInputEvent;
 }

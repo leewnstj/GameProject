@@ -17,8 +17,6 @@ public class RobotState : State
     {
         base.Update();
 
-        _robot.EntityMovementCompo.Movement(_so.MoveSpeed, false);
-
-        _robot.RobotRotateCompo.RotateTowardsMouse(_so.RotateSpeed);
+        _robot.PlayerMovementCompo.Movement(_so.MoveSpeed);
     }
 } 

@@ -18,6 +18,8 @@ public delegate void ChangeWeaponInputEvent(int index);
 
 #endregion
 
+public delegate void SelectWeaponEvent(WeaponSelect selectData);
+
 public static class PlayerHub
 {
     public static LeftMouseDownEvent OnLeftMouseDownEvent;
@@ -30,4 +32,6 @@ public static class PlayerHub
 
     public static ChangeWeaponEvent OnChangedWeaponEvent;
     public static ChangeWeaponInputEvent OnChangedWeaponInputEvent;
+
+    public static SelectWeaponEvent OnSelectWeaponEvent;
 }

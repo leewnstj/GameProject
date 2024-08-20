@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleRobot : Player
-{
+{    
     public bool CanTransform { get; private set; } = false;
 
     private BattleRobotTransform _robotTransform;

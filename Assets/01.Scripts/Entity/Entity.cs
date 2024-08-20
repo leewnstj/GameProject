@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // 추상 클래스 Entity는 PoolableMono 및 IEventPublisher 인터페이스를 상속받는다.

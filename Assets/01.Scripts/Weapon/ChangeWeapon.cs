@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ChangeWeapon : IEventPublisher
 {
-    public List<WeaponType> _weaponTypes = new();
+    private List<WeaponType> _weaponTypes = new();
     private WeaponType _currentWeapon = WeaponType.None;
     private float _coolTime = 3f;
 

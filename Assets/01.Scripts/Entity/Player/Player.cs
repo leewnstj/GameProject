@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,13 +9,12 @@ public class Player : Entity
 
     public BattleRobotSO RobotSO   { get; private set; }
 
-    #region Component
-
     public PlayerMovement PlayerMovementCompo { get; private set; }
     public RobotRotation RobotRotateCompo { get; private set; }
     public ChangeWeapon ChangedWeaponCompo { get; private set; }
 
-    #endregion
+
+    public List<WeaponType> _weaponTypes = new();
 
     protected override void Awake()
     {
@@ -25,7 +23,7 @@ public class Player : Entity
         RobotRotateCompo = new(transform);
 
         ChangedWeaponCompo = EventFactoryCompo.CreateEntityComponent<ChangeWeapon>();
-        //ChangedWeaponCompo.SetInit();
+        ChangedWeaponCompo.SetInit(_weaponTypes, _robotSO.TransformCoolTime);
 
         PlayerMovementCompo = EventFactoryCompo.CreateEntityComponent<PlayerMovement>();
         PlayerMovementCompo.Init(RigidbodyCompo);

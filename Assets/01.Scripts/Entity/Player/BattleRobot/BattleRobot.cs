@@ -7,11 +7,7 @@ public class BattleRobot : Player
 {
     public bool CanTransform { get; private set; } = false;
 
-    #region Component
-
     private BattleRobotTransform _robotTransform;
-
-    #endregion
 
     protected override void Awake()
     {

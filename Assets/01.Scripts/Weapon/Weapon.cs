@@ -5,8 +5,9 @@ using UnityEngine;
 
 public abstract class Weapon : PoolableMono
 {
-    [SerializeField] protected WeaponDataSO _weaponData;
+    [Header("Weapon")]
 
+    [SerializeField] protected WeaponDataSO _weaponData;
     [SerializeField] protected Transform _firePos;
 
     private Bullet _bulletPrefab;
@@ -43,7 +44,7 @@ public abstract class Weapon : PoolableMono
         _targetLayer  = target;
     }
 
-    protected void Shoot()
+    protected virtual void Shoot()
     {
         if (_maxBullet > 0 && !_delayShoot)
         {
@@ -65,7 +66,7 @@ public abstract class Weapon : PoolableMono
         }
     }
 
-    private IEnumerator ShootDelayCoroutine()
+    protected IEnumerator ShootDelayCoroutine()
     {
         _delayShoot = true;
         yield return new WaitForSeconds(_weaponData.WeaponDelay);

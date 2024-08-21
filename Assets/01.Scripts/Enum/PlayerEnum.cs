@@ -3,6 +3,6 @@ public enum WeaponType
     None = 0,
 
     Rifle,
-    Rocket,
+    Plasma,
     CaseShot,
 }

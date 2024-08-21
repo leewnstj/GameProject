@@ -49,7 +49,6 @@ MonoBehaviour:
   _weaponData: {fileID: 11400000, guid: b826fc54c557674428d0bcdd9e4e3cfc, type: 2}
   _firePos: {fileID: 102510559289664205}
   _muzzle: {fileID: 1083046372890503369}
-  _muzzleTarget: {fileID: 0}
   _minDamage: 5
   _chargeRate: 10
   _rotateSpeed: 6.5
@@ -198,9 +197,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8297834942665373401, guid: 88fd1850656a4a5418594995ded6d0ed, type: 3}
-  - {fileID: -8297834942665373401, guid: 88fd1850656a4a5418594995ded6d0ed, type: 3}
-  - {fileID: -8297834942665373401, guid: 88fd1850656a4a5418594995ded6d0ed, type: 3}
+  - {fileID: 2100000, guid: bf2019fd120636d4cafbdc344de3f372, type: 2}
+  - {fileID: 2100000, guid: bf2019fd120636d4cafbdc344de3f372, type: 2}
+  - {fileID: 2100000, guid: bf2019fd120636d4cafbdc344de3f372, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -350,9 +349,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8297834942665373401, guid: 88fd1850656a4a5418594995ded6d0ed, type: 3}
-  - {fileID: -8297834942665373401, guid: 88fd1850656a4a5418594995ded6d0ed, type: 3}
-  - {fileID: -8297834942665373401, guid: 88fd1850656a4a5418594995ded6d0ed, type: 3}
+  - {fileID: 2100000, guid: bf2019fd120636d4cafbdc344de3f372, type: 2}
+  - {fileID: 2100000, guid: bf2019fd120636d4cafbdc344de3f372, type: 2}
+  - {fileID: 2100000, guid: bf2019fd120636d4cafbdc344de3f372, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

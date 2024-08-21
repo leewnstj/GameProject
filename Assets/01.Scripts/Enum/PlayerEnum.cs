@@ -4,5 +4,5 @@ public enum WeaponType
 
     Rifle,
     Plasma,
-    CaseShot,
+    Flamethrower,
 }

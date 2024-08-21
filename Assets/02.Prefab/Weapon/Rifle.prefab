@@ -131,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponData: {fileID: 11400000, guid: 71e61100bad6fa7489ee69cd7f2f912f, type: 2}
   _firePos: {fileID: 3533408114987786721}
+  _meshRenderer: {fileID: 4273673388374468661}
 --- !u!1 &5127965377386397568
 GameObject:
   m_ObjectHideFlags: 0

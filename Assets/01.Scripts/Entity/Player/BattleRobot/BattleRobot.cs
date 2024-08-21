@@ -4,10 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleRobot : Player
-{    
+{
+    [Header("Battle Robot")]
+
+    [SerializeField] private Transform _droneTarget;
+
+    public Transform DroneTarget => _droneTarget;
     public bool CanTransform { get; private set; } = false;
 
     private BattleRobotTransform _robotTransform;
+
 
     protected override void Awake()
     {

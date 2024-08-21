@@ -19,12 +19,12 @@ public class BattleRobotTransform : IEventPublisher
 
     public void SubscribeEvent()
     {
-        PlayerHub.OnTransformEvent += TransformRobot;
+        InputManager.OnTransformEvent += TransformRobot;
     }
 
     public void UnSubscribeEvent()
     {
-        PlayerHub.OnTransformEvent -= TransformRobot;
+        InputManager.OnTransformEvent -= TransformRobot;
     }
 
     public void SetTransform(bool value) => _canTransform = value;

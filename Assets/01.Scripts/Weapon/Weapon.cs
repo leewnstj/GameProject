@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,9 +17,26 @@ public abstract class Weapon : MonoBehaviour
 
     protected Vector3 _fireDirection => new Vector3(_firePos.forward.x, 0, _firePos.forward.z);
 
+    private MeshRenderer[] _meshRenderers;
+
+    private void Awake()
+    {
+        _meshRenderers = GetComponentsInChildren<MeshRenderer>();
+    }
+
     private void Start()
     {
         _maxBullet = _weaponData.AmmoCapacity;
+
+        Dissolve(1f, 0f);
+    }
+
+    private void Dissolve(float value, float duration)
+    {
+        foreach (var meshRenderer in _meshRenderers)
+        {
+            meshRenderer.material.DOFloat(value, "_DissolveAmount", duration);
+        }
     }
 
     public void SetWeapon(Bullet bullet, LayerMask target)

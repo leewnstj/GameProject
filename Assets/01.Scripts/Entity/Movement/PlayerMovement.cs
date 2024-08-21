@@ -6,11 +6,11 @@ public class PlayerMovement : EntityMovement, IEventPublisher
 {
     public void SubscribeEvent()
     {
-        PlayerHub.OnMoveEvent += SetDirection;
+        InputManager.OnMoveEvent += SetDirection;
     }
 
     public void UnSubscribeEvent()
     {
-        PlayerHub.OnMoveEvent -= SetDirection;
+        InputManager.OnMoveEvent -= SetDirection;
     }
 }

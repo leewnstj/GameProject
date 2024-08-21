@@ -1,38 +1,31 @@
-using System.Collections.Generic;
-using UnityEngine;
-
 public class ChangeWeapon : IEventPublisher
 {
-    private List<WeaponType> _weaponTypes = new();
-    private WeaponType _currentWeapon = WeaponType.None;
-    private float _coolTime = 3f;
-
+    private float _coolTime = 0f;
     private bool _canChangingWeapon = true;
 
-    public void SetInit(List<WeaponType> weaponTypes, float coolTime)
+    public void SetInit(float coolTime)
     {
-        _weaponTypes = weaponTypes;
-
         _coolTime = coolTime;
     }
 
     public void SubscribeEvent()
     {
-        PlayerHub.OnChangedWeaponInputEvent += WeaponChange;
+        InputManager.OnNumberInputEvent += WeaponChange;
     }
 
     public void UnSubscribeEvent()
     {
-        PlayerHub.OnChangedWeaponInputEvent -= WeaponChange;
+        InputManager.OnNumberInputEvent -= WeaponChange;
     }
 
     public void WeaponChange(int inputNumber)
     {
         if (!_canChangingWeapon) return;
+
         _canChangingWeapon = false;
 
-        _currentWeapon = _weaponTypes[inputNumber];
-        PlayerHub.OnChangedWeaponEvent?.Invoke(_currentWeapon);
+        WeaponSelect weaponSelect = PlanetManager.WeaponRegister.WeaponSelectList[inputNumber];
+        PlayerHub.OnChangedWeaponEvent?.Invoke(weaponSelect);
 
         CoroutineUtil.CallWaitForSeconds(_coolTime, () => _canChangingWeapon = true);
     }

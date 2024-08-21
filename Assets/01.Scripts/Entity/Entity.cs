@@ -4,6 +4,8 @@ using UnityEngine;
 // 추상 클래스 Entity는 PoolableMono 및 IEventPublisher 인터페이스를 상속받는다.
 public abstract class Entity : PoolableMono
 {
+    [Header("Entity")]
+
     [SerializeField] private EntityType _entityType;  // Entity의 타입을 나타낸다.
     [SerializeField] protected BattleRobotSO _robotSO;
 

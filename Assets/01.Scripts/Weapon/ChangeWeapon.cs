@@ -1,21 +1,17 @@
-public class ChangeWeapon : IEventPublisher
+using System.Collections.Generic;
+
+public class ChangeWeapon
 {
+    private List<WeaponSelect> _weaponSelectList = new();
+
     private float _coolTime = 0f;
     private bool _canChangingWeapon = true;
 
-    public void SetInit(float coolTime)
+    public void SetInit(List<WeaponSelect> weaponSelectList, float coolTime)
     {
+        _weaponSelectList = weaponSelectList;
+
         _coolTime = coolTime;
-    }
-
-    public void SubscribeEvent()
-    {
-        InputManager.OnNumberInputEvent += WeaponChange;
-    }
-
-    public void UnSubscribeEvent()
-    {
-        InputManager.OnNumberInputEvent -= WeaponChange;
     }
 
     public void WeaponChange(int inputNumber)
@@ -24,8 +20,8 @@ public class ChangeWeapon : IEventPublisher
 
         _canChangingWeapon = false;
 
-        WeaponSelect weaponSelect = PlanetManager.WeaponRegister.WeaponSelectList[inputNumber];
-        PlayerHub.OnChangedWeaponEvent?.Invoke(weaponSelect);
+        WeaponSelect weaponSelect = _weaponSelectList[inputNumber];
+        SignalHub.OnChangedWeaponEvent?.Invoke(weaponSelect);
 
         CoroutineUtil.CallWaitForSeconds(_coolTime, () => _canChangingWeapon = true);
     }

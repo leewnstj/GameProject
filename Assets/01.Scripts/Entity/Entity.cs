@@ -1,20 +1,21 @@
 using System;
 using UnityEngine;
 
-// 추상 클래스 Entity는 PoolableMono 및 IEventPublisher 인터페이스를 상속받는다.
+/// <summary>
+/// Entity는 PoolableMono를 상속받는다.
+/// </summary>
 public abstract class Entity : PoolableMono
 {
     [Header("Entity")]
 
-    [SerializeField] private EntityType _entityType;  // Entity의 타입을 나타낸다.
+    [SerializeField] private EntityType _entityType;
     [SerializeField] protected BattleRobotSO _robotSO;
 
     #region 컴포넌트 선언
 
-    public Animator AnimatorCompo { get; private set; }  // Animator 컴포넌트
-    public Rigidbody RigidbodyCompo { get; private set; }  // Rigidbody 컴포넌트
-    public EntityMovement EntityMovementCompo { get; private set; }  // EntityMovement 컴포넌트
-    public EventFactory EventFactoryCompo { get; private set; }
+    public Animator AnimatorCompo { get; private set; }
+    public Rigidbody RigidbodyCompo { get; private set; }
+    public EntityMovement EntityMovementCompo { get; private set; }
 
     #endregion
 
@@ -22,50 +23,33 @@ public abstract class Entity : PoolableMono
 
     public StateMachine StateMachine { get; private set; }
 
-    private IEventPublisher[] _eventPublishers;
-
-    // 객체가 생성될 때 호출되는 메서드
     protected virtual void Awake()
     {
-        // Factory 초기화
-        EventFactoryCompo = new EventFactory();
-
-        // 컴포넌트 초기화
         AnimatorCompo = GetComponentInChildren<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody>();
 
-        // 자식 오브젝트에 있는 IEventPublisher 컴포넌트 가져오기
-        _eventPublishers = GetComponentsInChildren<IEventPublisher>();
-
-        // 상태 머신 초기화
         InitializeStateMachine();
     }
 
     private void OnEnable()
     {
-        SubscribeAllEvents();
+        SubscribeFunction();
     }
 
     private void OnDisable()
     {
-        UnsubscribeAllEvents();
+        UnsubscribeFunction();
     }
 
-    private void SubscribeAllEvents()
-    {
-        foreach (var publisher in _eventPublishers)
-        {
-            publisher.SubscribeEvent();
-        }
-    }
+    /// <summary>
+    /// 함수 구독
+    /// </summary>
+    protected abstract void SubscribeFunction();
 
-    private void UnsubscribeAllEvents()
-    {
-        foreach (var publisher in _eventPublishers)
-        {
-            publisher.UnSubscribeEvent();
-        }
-    }
+    /// <summary>
+    /// 함수 구독 해제
+    /// </summary>
+    protected abstract void UnsubscribeFunction();
 
 
     protected virtual void FixedUpdate()
@@ -76,7 +60,9 @@ public abstract class Entity : PoolableMono
         }
     }
 
-
+    /// <summary>
+    /// 생물체(Entity) FSM 초기화
+    /// </summary>
     protected void InitializeStateMachine()
     {
         StateMachine = new StateMachine();
@@ -104,7 +90,9 @@ public abstract class Entity : PoolableMono
         }
     }
 
-
+    /// <summary>
+    /// 생물체의 하나의 애니메이션이 끝나면 실행되는 함수
+    /// </summary>
     public void AnimationTrigger()
     {
         StateMachine.CurrentState.AnimatorFinishTrigger();

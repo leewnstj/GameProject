@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Player : Entity
 {
     public bool IsMove => PlayerMovementCompo.IsMove;
@@ -8,8 +5,8 @@ public class Player : Entity
     public BattleRobotSO RobotSO   { get; private set; }
 
     public PlayerMovement PlayerMovementCompo { get; private set; }
-    public RobotRotation RobotRotateCompo { get; private set; }
-    public ChangeWeapon ChangedWeaponCompo { get; private set; }
+    private RobotRotation RobotRotateCompo;
+    private ChangeWeapon ChangedWeaponCompo;
 
     protected override void Awake()
     {
@@ -17,10 +14,10 @@ public class Player : Entity
 
         RobotRotateCompo = new(transform);
 
-        ChangedWeaponCompo = EventFactoryCompo.CreateEntityComponent<ChangeWeapon>();
-        ChangedWeaponCompo.SetInit(_robotSO.TransformCoolTime);
+        ChangedWeaponCompo = new();
+        ChangedWeaponCompo.SetInit(PlanetManager.WeaponRegister.WeaponSelectList, _robotSO.TransformCoolTime);
 
-        PlayerMovementCompo = EventFactoryCompo.CreateEntityComponent<PlayerMovement>();
+        PlayerMovementCompo = new();
         PlayerMovementCompo.Init(RigidbodyCompo);
 
         RobotSO = Instantiate(_robotSO);
@@ -34,4 +31,16 @@ public class Player : Entity
     }
 
     public void SetRotation(bool value) => RobotRotateCompo.SetRotation(value);
+
+    protected override void SubscribeFunction()
+    {
+        InputManager.OnNumberInputEvent += ChangedWeaponCompo.WeaponChange;
+        InputManager.OnMoveEvent += PlayerMovementCompo.SetDirection;
+    }
+
+    protected override void UnsubscribeFunction()
+    {
+        InputManager.OnNumberInputEvent -= ChangedWeaponCompo.WeaponChange;
+        InputManager.OnMoveEvent -= PlayerMovementCompo.SetDirection;
+    }
 }

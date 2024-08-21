@@ -7,10 +7,32 @@ public class BattleRobotDrone : MonoBehaviour
     [SerializeField] private float _moveSpeed = 5.0f;
     [SerializeField] private float _rotationSpeed = 2.0f; // 회전 속도
 
+    private Dictionary<WeaponType, Weapon> _weaponByType = new();
+    private Weapon _currentWeapon;
+
     private Transform _endPoint;
+
     public void SetTarget(Transform target)
     {
         _endPoint = target;
+    }
+
+    public void SubscribeWeapon(WeaponType type, Weapon weapon)
+    {
+        if(!_weaponByType.ContainsKey(type))
+        {
+            _weaponByType.Add(type, weapon);
+        }
+    }
+
+    public void SelectWeapon(WeaponType type)
+    {
+        if(_weaponByType.TryGetValue(type, out Weapon weapon))
+        {
+            _currentWeapon?.gameObject.SetActive(false);
+            _currentWeapon = weapon;
+            weapon.gameObject.SetActive(true);
+        }
     }
 
     private void FixedUpdate()

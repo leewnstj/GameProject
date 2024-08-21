@@ -194,7 +194,7 @@ Material:
     - _DiffuseSmoothness: 0
     - _DiffuseThresholdOffset: 0.25
     - _Dissolve: 2
-    - _DissolveAmount: 0.409
+    - _DissolveAmount: 1
     - _DissolveBorderSize: 0.3
     - _DissolveMapScale: 0.8
     - _DrawnClampMax: 1
@@ -218,7 +218,7 @@ Material:
     - _Light: 1
     - _LightBands: 4
     - _LightBandsScale: 0.5
-    - _LightThreshold: 0.716
+    - _LightThreshold: 1
     - _Metallic: 0
     - _Mode: 0
     - _NormalMapIntensity: 1

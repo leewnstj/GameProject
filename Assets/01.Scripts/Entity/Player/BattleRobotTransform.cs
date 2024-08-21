@@ -1,7 +1,7 @@
 /// <summary>
 /// 전투 로봇의 모드(전투모드, 공모드)를 바꿔주는 
 /// </summary>
-public class BattleRobotTransform : IEventPublisher
+public class BattleRobotTransform
 {
     private StateMachine _ownerStateMachine;
     protected float _coolTime;
@@ -17,25 +17,15 @@ public class BattleRobotTransform : IEventPublisher
         _coolTime = coolTime;
     }
 
-    public void SubscribeEvent()
-    {
-        InputManager.OnTransformEvent += TransformRobot;
-    }
-
-    public void UnSubscribeEvent()
-    {
-        InputManager.OnTransformEvent -= TransformRobot;
-    }
-
     public void SetTransform(bool value) => _canTransform = value;
 
-    private void TransformRobot()
+    public void TransformRobot()
     {
         if (_canTransform)
-            TransformRobot(_coolTime);
+            Transforming(_coolTime);
     }
 
-    public void TransformRobot(float transformCoolTime)
+    public void Transforming(float transformCoolTime)
     {
         if (!_coolTimeComplete) return;
 

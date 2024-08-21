@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Weapon : MonoBehaviour
+public abstract class Weapon : PoolableMono
 {
     [SerializeField] protected WeaponDataSO _weaponData;
 
@@ -27,11 +27,9 @@ public abstract class Weapon : MonoBehaviour
     private void Start()
     {
         _maxBullet = _weaponData.AmmoCapacity;
-
-        Dissolve(1f, 0f);
     }
 
-    private void Dissolve(float value, float duration)
+    public void Dissolve(int value, float duration)
     {
         foreach (var meshRenderer in _meshRenderers)
         {
@@ -76,7 +74,7 @@ public abstract class Weapon : MonoBehaviour
 
     public void ShootBullet()
     {
-        Bullet bullet = PoolManager.Instance.Pop(_bulletPrefab.name) as Bullet;
+        Bullet bullet = PoolManager.Pop(_bulletPrefab.name) as Bullet;
 
         float spread = Random.Range(-_weaponData.SpreadAngle, _weaponData.SpreadAngle);
 

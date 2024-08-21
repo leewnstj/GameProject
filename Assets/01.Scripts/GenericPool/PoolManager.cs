@@ -22,7 +22,17 @@ public class PoolManager
         _pools.Add(prefab.gameObject.name, pool);
     }
 
-    public PoolableMono Pop(string prefabName)
+    public static PoolableMono Pop(string prefabName)
+    {
+        return Instance.PopObject(prefabName);
+    }
+
+    public static void Push(PoolableMono obj)
+    {
+        Instance.PushObject(obj);
+    }
+
+    private PoolableMono PopObject(string prefabName)
     {
         if (_pools.ContainsKey(prefabName) == false)
         {
@@ -35,7 +45,7 @@ public class PoolManager
         return item;
     }
 
-    public void Push(PoolableMono obj)
+    private void PushObject(PoolableMono obj)
     {
         _pools[obj.name].Push(obj);
     }

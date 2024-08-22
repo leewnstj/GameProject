@@ -37,6 +37,15 @@ public abstract class Weapon : PoolableMono
         {
             meshRenderer.material.DOFloat(value, "_DissolveAmount", duration);
         }
+
+        StartCoroutine(DissolveEndCoroutine(duration, onEndDissolveAction));
+    }
+
+    private IEnumerator DissolveEndCoroutine(float duration, Action onEndDissolveAction = null)
+    {
+        yield return new WaitForSeconds(duration);
+
+        onEndDissolveAction?.Invoke();
     }
 
     public void SetWeapon(Bullet bullet, LayerMask target)

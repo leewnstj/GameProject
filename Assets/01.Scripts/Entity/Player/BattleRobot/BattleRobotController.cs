@@ -7,9 +7,14 @@ public class BattleRobotController : MonoBehaviour
     [SerializeField] private BattleRobot _battleRobotPrefab;
     [SerializeField] private BattleRobotDrone _battleRobotDronePrefab;
 
-    [SerializeField] private WeaponFactory _weaponFactory;
+    private WeaponFactory _weaponFactory;
 
     [SerializeField] private LayerMask _targetLayer;
+
+    private void Awake()
+    {
+        _weaponFactory = GetComponent<WeaponFactory>();
+    }
 
     private void Start()
     {
@@ -30,15 +35,15 @@ public class BattleRobotController : MonoBehaviour
 
     private void OnEnable()
     {
-        SignalHub.OnChangedWeaponEvent += CreateWeapon;
+        SignalHub.OnChangedWeaponEvent += SelectWeapon;
     }
 
     private void OnDisable()
     {
-        SignalHub.OnChangedWeaponEvent -= CreateWeapon;
+        SignalHub.OnChangedWeaponEvent -= SelectWeapon;
     }
 
-    private void CreateWeapon(WeaponSelect weaponSelect)
+    private void SelectWeapon(WeaponSelect weaponSelect)
     {
         _battleRobotDronePrefab.SelectWeapon(weaponSelect.WeaponType);
     }

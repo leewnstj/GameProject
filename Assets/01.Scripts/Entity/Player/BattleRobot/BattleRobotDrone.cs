@@ -8,6 +8,7 @@ public class BattleRobotDrone : MonoBehaviour
     [SerializeField] private float _rotationSpeed = 2.0f; // 회전 속도
 
     private Dictionary<WeaponType, Weapon> _weaponByType = new();
+
     private Weapon _currentWeapon;
 
     private Transform _endPoint;
@@ -29,10 +30,19 @@ public class BattleRobotDrone : MonoBehaviour
     {
         if(_weaponByType.TryGetValue(type, out Weapon weapon))
         {
-            _currentWeapon?.Dissolve(1, 0.5f);
-            _currentWeapon?.gameObject.SetActive(false);
+            if (_currentWeapon != null)
+            {
+                Weapon beforeWeapon = _currentWeapon;
+
+                beforeWeapon.Dissolve(1, 0.5f, () =>
+                {
+                    beforeWeapon.gameObject.SetActive(false);
+                });
+            }
+
             _currentWeapon = weapon;
-            weapon.gameObject.SetActive(true);
+            _currentWeapon.gameObject.SetActive(true);
+            _currentWeapon?.Dissolve(0, 0.5f);
         }
     }
 

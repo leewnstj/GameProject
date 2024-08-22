@@ -331,6 +331,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponData: {fileID: 11400000, guid: 4f79a1bef7045a44b869011d61b4d042, type: 2}
   _firePos: {fileID: 7531351268881593376}
+  _flamethrowerEffect: {fileID: 3015155037067514391, guid: f6f04d9765870b04690c4224cad47b25,
+    type: 3}
 --- !u!1 &5921531803492632075
 GameObject:
   m_ObjectHideFlags: 0

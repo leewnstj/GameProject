@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class PlasmaGun : Weapon
+public class PlasmaGun : Weapon, IParticle
 {
     [Header("PlasmaGun")]
     [SerializeField] private Transform _muzzle;
-    [SerializeField] private ParticleSystem _electricPartice;
+    [SerializeField] private ElectricEffect _electricPartice;
 
     [SerializeField] private float _maxEffectScale;
     [SerializeField] private float _minDamage;
@@ -47,12 +47,13 @@ public class PlasmaGun : Weapon
 
     private void UpdateCharging()
     {
+        if (_currentParticle == null) return;
         if (_maxBullet <= 0 || _delayShoot) return;
 
         _currentDamage += _chargeRate * Time.deltaTime;
         _currentDamage = Mathf.Clamp(_currentDamage, _minDamage, _weaponData.Damage);
 
-        UpdaeParticle();
+        UpdateParticle();
     }
 
 
@@ -66,25 +67,19 @@ public class PlasmaGun : Weapon
 
     protected override void Shoot()
     {
+        if (_currentParticle == null) return;
+
         base.Shoot();
 
         _currentDamage = _minDamage;
         _currentEffectSize = 0;
-
         DestroyParticle();
     }
 
     #region Particle
 
-    private void CreateParticle()
-    {
-        _currentParticle = PoolManager.Pop(_electricPartice.name) as ElectricEffect;
-        _currentParticle.transform.SetParent(transform);
-        _currentParticle.transform.position = _firePos.position;
-        _currentParticle.Set(_maxEffectScale);
-    }
 
-    private void UpdaeParticle()
+    public void UpdateParticle()
     {
         _currentEffectSize += _effectGrowthRate * Time.deltaTime;
         _currentEffectSize = Mathf.Clamp(_currentEffectSize, 0, _maxEffectScale); // 최대 크기 제한
@@ -92,10 +87,24 @@ public class PlasmaGun : Weapon
         _currentParticle.Scale(_currentEffectSize);
     }
 
-    private void DestroyParticle()
+    public void CreateParticle()
+    {
+        if (_currentParticle != null)
+        {
+            DestroyParticle();
+        }
+        _currentParticle = PoolManager.Pop(_electricPartice.name) as ElectricEffect;
+        _currentParticle.transform.SetParent(transform);
+        _currentParticle.transform.position = _firePos.position;
+        _currentParticle.Set(_maxEffectScale);
+    }
+
+    public void DestroyParticle()
     {
         _currentParticle.ResetEffect();
+
         PoolManager.Push(_currentParticle);
+        _currentParticle = null;
     }
 
     #endregion

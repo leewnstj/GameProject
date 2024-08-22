@@ -223,7 +223,7 @@ Material:
     - _Mode: 0
     - _NormalMapIntensity: 1
     - _OcclusionStrength: 1
-    - _OptionsTab: 1
+    - _OptionsTab: 0
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -268,7 +268,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DissolveBorderColor: {r: 0.047058802, g: 0.6839872, b: 3.0745099, a: 1}
-    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 2, b: 1.3764218, a: 1}
     - _GoochBrightColor: {r: 1, g: 0.9575472, b: 0.9575472, a: 1}
     - _GoochDarkColor: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 1}
     - _IridescenceColor: {r: 1, g: 1, b: 1, a: 1}

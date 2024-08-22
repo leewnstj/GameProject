@@ -39,10 +39,7 @@ public class PlasmaGun : Weapon
     {
         if (_maxBullet <= 0 || _delayShoot) return;
 
-        _currentParticle =  PoolManager.Pop(_electricPartice.name) as ElectricEffect;
-        _currentParticle.transform.SetParent(transform);
-        _currentParticle.transform.position = _firePos.position;
-        _currentParticle.Set(_maxEffectScale);
+        CreateParticle();
 
         _currentDamage = _minDamage;
     }
@@ -55,10 +52,7 @@ public class PlasmaGun : Weapon
         _currentDamage += _chargeRate * Time.deltaTime;
         _currentDamage = Mathf.Clamp(_currentDamage, _minDamage, _weaponData.Damage);
 
-        _currentEffectSize += _effectGrowthRate * Time.deltaTime;
-        _currentEffectSize = Mathf.Clamp(_currentEffectSize, 0, _maxEffectScale); // 최대 크기 제한
-
-        _currentParticle.Scale(_currentEffectSize);
+        UpdaeParticle();
     }
 
 
@@ -76,8 +70,33 @@ public class PlasmaGun : Weapon
 
         _currentDamage = _minDamage;
         _currentEffectSize = 0;
-        _currentParticle.ResetEffect();
 
+        DestroyParticle();
+    }
+
+    #region Particle
+
+    private void CreateParticle()
+    {
+        _currentParticle = PoolManager.Pop(_electricPartice.name) as ElectricEffect;
+        _currentParticle.transform.SetParent(transform);
+        _currentParticle.transform.position = _firePos.position;
+        _currentParticle.Set(_maxEffectScale);
+    }
+
+    private void UpdaeParticle()
+    {
+        _currentEffectSize += _effectGrowthRate * Time.deltaTime;
+        _currentEffectSize = Mathf.Clamp(_currentEffectSize, 0, _maxEffectScale); // 최대 크기 제한
+
+        _currentParticle.Scale(_currentEffectSize);
+    }
+
+    private void DestroyParticle()
+    {
+        _currentParticle.ResetEffect();
         PoolManager.Push(_currentParticle);
     }
+
+    #endregion
 }

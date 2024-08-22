@@ -14,9 +14,9 @@ public class ElectricEffect : Effect
     {
         _particles = GetComponentsInChildren<ParticleSystem>();
 
-        foreach(var particle in _particles)
+        for (int particleNumber = 0; particleNumber < _particles.Length; particleNumber++)
         {
-            var mainModule = particle.main;
+            var mainModule = _particles[particleNumber].main;
 
             _startSize.Add(mainModule.startSize);
         }
@@ -29,9 +29,9 @@ public class ElectricEffect : Effect
 
     public void Scale(float scale)
     {
-        foreach (var particle in _particles)
+        for (int particleNumber = 0; particleNumber < _particles.Length; particleNumber++)
         {
-            var mainModule = particle.main;
+            var mainModule = _particles[particleNumber].main;
 
             // 기존 크기에 scale만큼 더한 후 maxSize를 초과하지 않도록 제한
             float newSize = Mathf.Clamp(mainModule.startSize.constant + scale, 0, _maxSize);
@@ -44,11 +44,11 @@ public class ElectricEffect : Effect
     public void ResetEffect()
     {
         //크기를 초기값으로 리셋
-        for(int i = 0; i <  _particles.Length; i++)
+        for(int particleNumber = 0; particleNumber <  _particles.Length; particleNumber++)
         {
-            var mainModule = _particles[i].main;
+            var mainModule = _particles[particleNumber].main;
 
-            mainModule.startSize = _startSize[i];
+            mainModule.startSize = _startSize[particleNumber];
         }
     }
 }

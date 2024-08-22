@@ -49,10 +49,12 @@ MonoBehaviour:
   _weaponData: {fileID: 11400000, guid: b826fc54c557674428d0bcdd9e4e3cfc, type: 2}
   _firePos: {fileID: 102510559289664205}
   _muzzle: {fileID: 1083046372890503369}
+  _electricPartice: {fileID: 19800002, guid: 1ca16f2a31fb6a548ad8954bed1d321f, type: 3}
+  _maxEffectScale: 1
   _minDamage: 5
   _chargeRate: 10
   _rotateSpeed: 6.5
-  _electricPartice: {fileID: 19800002, guid: 1ca16f2a31fb6a548ad8954bed1d321f, type: 3}
+  _effectGrowthRate: 0.001
 --- !u!1 &997325284607849042
 GameObject:
   m_ObjectHideFlags: 0

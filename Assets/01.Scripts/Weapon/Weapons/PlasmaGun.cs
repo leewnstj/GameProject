@@ -1,64 +1,83 @@
-using DG.Tweening;
 using UnityEngine;
 
 public class PlasmaGun : Weapon
 {
+    [Header("PlasmaGun")]
     [SerializeField] private Transform _muzzle;
+    [SerializeField] private ParticleSystem _electricPartice;
+
+    [SerializeField] private float _maxEffectScale;
     [SerializeField] private float _minDamage;
     [SerializeField] private float _chargeRate = 10f;
     [SerializeField] private float _rotateSpeed;
+    [SerializeField] private float _effectGrowthRate = 0.1f;
 
-    [SerializeField] private ParticleSystem _electricPartice;
 
-    private ParticleSystem _currentParticle;
+    private ElectricEffect _currentParticle;
     private float _currentDamage;
+    private float _currentEffectSize = 0;
+
 
     private void OnEnable()
     {
-        InputManager.OnLeftMouseDownEvent += CreateElectricEffect;
-        InputManager.OnLeftMouseEvent     += ChargingGuage;
-        InputManager.OnLeftMouseEvent     += RotationMuzzle;
-        InputManager.OnLeftMouseUpEvent   += Shoot;
+        InputManager.OnLeftMouseDownEvent += StartCharging;
+        InputManager.OnLeftMouseEvent += UpdateCharging;
+        InputManager.OnLeftMouseEvent += RotateMuzzle;
+        InputManager.OnLeftMouseUpEvent += Shoot;
     }
 
     private void OnDisable()
     {
-        InputManager.OnLeftMouseDownEvent -= CreateElectricEffect;
-        InputManager.OnLeftMouseEvent     -= ChargingGuage;
-        InputManager.OnLeftMouseEvent     -= RotationMuzzle;
-        InputManager.OnLeftMouseUpEvent   -= Shoot;
+        InputManager.OnLeftMouseDownEvent -= StartCharging;
+        InputManager.OnLeftMouseEvent -= UpdateCharging;
+        InputManager.OnLeftMouseEvent -= RotateMuzzle;
+        InputManager.OnLeftMouseUpEvent -= Shoot;
     }
 
-    private void CreateElectricEffect()
+
+    private void StartCharging()
     {
         if (_maxBullet <= 0 || _delayShoot) return;
 
-        _currentParticle = Instantiate(_electricPartice, transform);
-        _currentParticle.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-        _currentParticle.transform.position = _muzzle.transform.position;
+        _currentParticle =  PoolManager.Pop(_electricPartice.name) as ElectricEffect;
+        _currentParticle.transform.SetParent(transform);
+        _currentParticle.transform.position = _firePos.position;
+        _currentParticle.Set(_maxEffectScale);
+
+        _currentDamage = _minDamage;
     }
 
-    private void ChargingGuage()
+
+    private void UpdateCharging()
     {
         if (_maxBullet <= 0 || _delayShoot) return;
 
         _currentDamage += _chargeRate * Time.deltaTime;
-
         _currentDamage = Mathf.Clamp(_currentDamage, _minDamage, _weaponData.Damage);
+
+        _currentEffectSize += _effectGrowthRate * Time.deltaTime;
+        _currentEffectSize = Mathf.Clamp(_currentEffectSize, 0, _maxEffectScale); // 최대 크기 제한
+
+        _currentParticle.Scale(_currentEffectSize);
     }
 
-    private void RotationMuzzle()
+
+    private void RotateMuzzle()
     {
         if (_maxBullet <= 0 || _delayShoot) return;
 
-        _muzzle.transform.Rotate(new Vector3(0, _currentDamage, 0) * Time.deltaTime * _rotateSpeed);
+        _muzzle.transform.Rotate(Vector3.up * _currentDamage * _rotateSpeed * Time.deltaTime);
     }
+
 
     protected override void Shoot()
     {
         base.Shoot();
 
         _currentDamage = _minDamage;
-        Destroy(_currentParticle);
+        _currentEffectSize = 0;
+        _currentParticle.ResetEffect();
+
+        PoolManager.Push(_currentParticle);
     }
 }

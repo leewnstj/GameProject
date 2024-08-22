@@ -1,7 +1,8 @@
 using DG.Tweening;
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public abstract class Weapon : PoolableMono
 {
@@ -30,7 +31,7 @@ public abstract class Weapon : PoolableMono
         _maxBullet = _weaponData.AmmoCapacity;
     }
 
-    public void Dissolve(int value, float duration)
+    public void Dissolve(int value, float duration, Action onEndDissolveAction = null)
     {
         foreach (var meshRenderer in _meshRenderers)
         {

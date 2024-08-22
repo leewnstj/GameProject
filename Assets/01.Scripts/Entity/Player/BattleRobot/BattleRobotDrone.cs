@@ -29,6 +29,7 @@ public class BattleRobotDrone : MonoBehaviour
     {
         if(_weaponByType.TryGetValue(type, out Weapon weapon))
         {
+            _currentWeapon?.Dissolve(1, 0.5f);
             _currentWeapon?.gameObject.SetActive(false);
             _currentWeapon = weapon;
             weapon.gameObject.SetActive(true);

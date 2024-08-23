@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -24,7 +24,6 @@ public class projectileActorExplosion1 : MonoBehaviour {
     public float min, max;
 
     public bool swarmMissileLauncher = false;
-    int projectileSimFire = 1;
 
 
     public bool Torque = false;
@@ -39,10 +38,6 @@ public class projectileActorExplosion1 : MonoBehaviour {
 	void Start ()
     {
         UiText.text = bombList[bombType].name.ToString();
-        if (swarmMissileLauncher)
-        {
-            projectileSimFire = 5;
-        }
 	}
 	
 	// Update is called once per frame

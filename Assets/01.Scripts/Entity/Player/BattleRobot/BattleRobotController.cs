@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class BattleRobotController : MonoBehaviour
 {
-    [SerializeField] private BattleRobot _battleRobotPrefab;
-    [SerializeField] private BattleRobotDrone _battleRobotDronePrefab;
-
-    private WeaponFactory _weaponFactory;
+    [SerializeField] private BattleRobot _battleRobot;
+    [SerializeField] private BattleRobotDrone _battleRobotDrone;
 
     [SerializeField] private LayerMask _targetLayer;
+
+    private bool _canSelectWeapon = true;
+    private WeaponFactory _weaponFactory;
 
     private void Awake()
     {
@@ -18,16 +19,16 @@ public class BattleRobotController : MonoBehaviour
 
     private void Start()
     {
-        _battleRobotDronePrefab.SetTarget(_battleRobotPrefab.DroneTarget);
+        _battleRobotDrone.SetTarget(_battleRobot.DroneTarget);
 
-        _weaponFactory.SetWeapon(_battleRobotDronePrefab.transform, Vector3.zero);
+        _weaponFactory.SetWeapon(_battleRobotDrone.transform, Vector3.zero);
 
         foreach (WeaponSelect weaponSelect in PlanetManager.WeaponRegister.WeaponSelectList)
         {
             Weapon weapon = _weaponFactory.CreateWeapon(weaponSelect);
             weapon.SetWeapon(weaponSelect.BulletPrefab, _targetLayer);
 
-            _battleRobotDronePrefab.SubscribeWeapon(weaponSelect.WeaponType, weapon);
+            _battleRobotDrone.SubscribeWeapon(weaponSelect.WeaponType, weapon);
 
             weapon.gameObject.SetActive(false);
         }
@@ -35,16 +36,29 @@ public class BattleRobotController : MonoBehaviour
 
     private void OnEnable()
     {
-        SignalHub.OnChangedWeaponEvent += SelectWeapon;
+        SignalHub.OnChangedWeaponEvent    += SelectWeapon;
+        SignalHub.OnChangedRobotFormEvent += ChangedRobotForm;
     }
 
     private void OnDisable()
     {
-        SignalHub.OnChangedWeaponEvent -= SelectWeapon;
+        SignalHub.OnChangedWeaponEvent    -= SelectWeapon;
+        SignalHub.OnChangedRobotFormEvent -= ChangedRobotForm;
     }
 
     private void SelectWeapon(WeaponSelect weaponSelect)
     {
-        _battleRobotDronePrefab.SelectWeapon(weaponSelect.WeaponType);
+        if(_canSelectWeapon)
+            _battleRobotDrone.SelectWeapon(weaponSelect.WeaponType);
+    }
+
+    private void ChangedRobotForm(bool isRobotForm)
+    {
+        _canSelectWeapon = isRobotForm;
+
+        if (!isRobotForm)
+        {
+            _battleRobotDrone.HideWeapon();
+        }
     }
 }

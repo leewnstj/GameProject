@@ -12,6 +12,8 @@ public class BattleRobotDrone : MonoBehaviour
 
     private Transform _endPoint;
 
+    private bool _awayFromPlayer => Vector3.Distance(transform.position, _endPoint.position) > 2f;
+
     public void SetTarget(Transform target)
     {
         _endPoint = target;
@@ -22,6 +24,21 @@ public class BattleRobotDrone : MonoBehaviour
         if(!_weaponByType.ContainsKey(type))
         {
             _weaponByType.Add(type, weapon);
+        }
+    }
+
+    public void HideWeapon()
+    {
+        if (_currentWeapon != null)
+        {
+            Weapon beforeWeapon = _currentWeapon;
+
+            beforeWeapon.Dissolve(1, 0.5f, () =>
+            {
+                beforeWeapon.gameObject.SetActive(false);
+            });
+
+            _currentWeapon = null;
         }
     }
 
@@ -40,14 +57,19 @@ public class BattleRobotDrone : MonoBehaviour
             }
 
             _currentWeapon = weapon;
+            _currentWeapon.Dissolve(0, 0.5f);
             _currentWeapon.gameObject.SetActive(true);
-            _currentWeapon?.Dissolve(0, 0.5f);
         }
     }
 
     private void FixedUpdate()
     {
         // 위치 이동
+        if (_awayFromPlayer)
+            _moveSpeed = 12f;
+        else
+            _moveSpeed = 5f;
+
         transform.position = Vector3.MoveTowards(transform.position, _endPoint.position, _moveSpeed * Time.fixedDeltaTime);
 
         // 회전

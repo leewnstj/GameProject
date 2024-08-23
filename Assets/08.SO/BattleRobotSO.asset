@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BattleRobotSO
   m_EditorClassIdentifier: 
   MaxHealth: 300
-  MoveSpeed: 8
+  MoveSpeed: 5
   RotateSpeed: 35
-  RollSpeed: 16
+  RollSpeed: 12
   TransformTime: 1
   TransformCoolTime: 3

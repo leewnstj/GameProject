@@ -14,8 +14,10 @@ public class WeaponFactory : EntityFactory<Weapon>
     public Weapon CreateWeapon(WeaponSelect weaponSelect)
     {
         Weapon weapon = SpawnObject(weaponSelect.Weapon) as Weapon;
+
         weapon.transform.SetParent(_parent);
         weapon.transform.localPosition = _spawnPosition;
+
         return weapon;
     }
 

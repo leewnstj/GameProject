@@ -19,7 +19,10 @@ public class Player : Entity
 
         PlayerMovementCompo = new();
         PlayerMovementCompo.Init(RigidbodyCompo);
+    }
 
+    private void Start()
+    {
         RobotSO = Instantiate(_robotSO);
     }
 

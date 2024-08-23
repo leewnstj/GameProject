@@ -14467,7 +14467,7 @@ GameObject:
   - component: {fileID: 9058911137463910647}
   - component: {fileID: 3015155037067514391}
   m_Layer: 0
-  m_Name: FlameThrower
+  m_Name: FlameThrowerEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class Effect : PoolableMono
+namespace ProjectEffect
 {
-    public float Duration => _particleSystem.main.duration;
-
-    private ParticleSystem _particleSystem;
-
-    private void Awake()
+    public class Effect : PoolableMono
     {
-        _particleSystem = GetComponent<ParticleSystem>();
+        public float Duration => _particleSystem.main.duration;
+
+        private ParticleSystem _particleSystem;
+
+        private void Awake()
+        {
+            _particleSystem = GetComponent<ParticleSystem>();
+        }
     }
 }

@@ -17,6 +17,6 @@ MonoBehaviour:
   WeaponDelay: 1
   SpreadAngle: 0
   BulletCount: 1
-  BulletSpeed: 40
+  BulletSpeed: 15
   ReloadTime: 1
   ReloadClip: {fileID: 0}

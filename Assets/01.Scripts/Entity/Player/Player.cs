@@ -4,25 +4,18 @@ public class Player : Entity
 
     public BattleRobotSO RobotSO   { get; private set; }
 
-    public PlayerMovement PlayerMovementCompo { get; private set; }
-    private RobotRotation RobotRotateCompo;
-    private ChangeWeapon ChangedWeaponCompo;
+    public  PlayerMovement PlayerMovementCompo { get; private set; }
+    private RobotRotation  RobotRotateCompo;
+    private ChangeWeapon   ChangedWeaponCompo;
 
     protected override void Awake()
     {
         base.Awake();
 
-        RobotRotateCompo = new(transform);
+        RobotRotateCompo    = new(transform);
+        ChangedWeaponCompo  = new(PlanetManager.WeaponRegister.WeaponSelectList, _robotSO.TransformCoolTime);
+        PlayerMovementCompo = new(RigidbodyCompo);
 
-        ChangedWeaponCompo = new();
-        ChangedWeaponCompo.SetInit(PlanetManager.WeaponRegister.WeaponSelectList, _robotSO.TransformCoolTime);
-
-        PlayerMovementCompo = new();
-        PlayerMovementCompo.Init(RigidbodyCompo);
-    }
-
-    private void Start()
-    {
         RobotSO = Instantiate(_robotSO);
     }
 
@@ -38,12 +31,12 @@ public class Player : Entity
     protected override void SubscribeFunction()
     {
         InputManager.OnNumberInputEvent += ChangedWeaponCompo.WeaponChange;
-        InputManager.OnMoveEvent += PlayerMovementCompo.SetDirection;
+        InputManager.OnMoveEvent        += PlayerMovementCompo.SetDirection;
     }
 
     protected override void UnsubscribeFunction()
     {
         InputManager.OnNumberInputEvent -= ChangedWeaponCompo.WeaponChange;
-        InputManager.OnMoveEvent -= PlayerMovementCompo.SetDirection;
+        InputManager.OnMoveEvent        -= PlayerMovementCompo.SetDirection;
     }
 }

@@ -1,12 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using ProjectEffect;
 
 public class HitFeedback : Feedback
 {
     [SerializeField] private EffectEnum _effectType;
 
     private Effect _effect;
+
+    public void ChangeEffect(EffectEnum type)
+    {
+        _effectType = type;
+    }
 
     public override void CreateFeedback()
     {

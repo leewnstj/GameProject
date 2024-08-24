@@ -48,14 +48,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponData: {fileID: 11400000, guid: b826fc54c557674428d0bcdd9e4e3cfc, type: 2}
   _firePos: {fileID: 102510559289664205}
-  _muzzle: {fileID: 1083046372890503369}
-  _electricPartice: {fileID: 7724759998837992572, guid: 1ca16f2a31fb6a548ad8954bed1d321f,
-    type: 3}
-  _maxEffectScale: 1
   _minDamage: 5
   _chargeRate: 10
-  _rotateSpeed: 6.5
-  _effectGrowthRate: 0.001
+  _maxBulletSize: 1.1
+  _growthRate: 0.1
+  OnStartChargingEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7151748236662923729}
+        m_TargetAssemblyTypeName: CreateElectricEffect, Assembly-CSharp
+        m_MethodName: CreateParticle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnUpdateChargingEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3094616335794055415}
+        m_TargetAssemblyTypeName: RotationObject, Assembly-CSharp
+        m_MethodName: Rotation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7151748236662923729}
+        m_TargetAssemblyTypeName: CreateElectricEffect, Assembly-CSharp
+        m_MethodName: UpdateParticle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnEndChargingEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7151748236662923729}
+        m_TargetAssemblyTypeName: CreateElectricEffect, Assembly-CSharp
+        m_MethodName: DestroyParticle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &997325284607849042
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,6 +286,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 102510559289664205}
+  - component: {fileID: 7151748236662923729}
   m_Layer: 0
   m_Name: FirePos
   m_TagString: Untagged
@@ -255,6 +309,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6407114300654321729}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7151748236662923729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3992325411171089560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d6679c0c6320148877a14f0c1b5c74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxEffectScale: 1
+  _effectGrowthRate: 0.0001
+  _electricParticle: {fileID: 7724759998837992572, guid: 1ca16f2a31fb6a548ad8954bed1d321f,
+    type: 3}
 --- !u!1 &4371147731094275913
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,6 +706,7 @@ GameObject:
   - component: {fileID: 1083046372890503369}
   - component: {fileID: 6110102380313069987}
   - component: {fileID: 5684975297202389084}
+  - component: {fileID: 3094616335794055415}
   m_Layer: 0
   m_Name: Plasma Core
   m_TagString: Untagged
@@ -710,3 +781,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3094616335794055415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211558259272748545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25b856653998cd441b220a0964aa73cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotateSpeed: 7
+  _growthRate: 10

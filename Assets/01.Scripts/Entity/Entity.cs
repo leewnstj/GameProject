@@ -8,12 +8,12 @@ public abstract class Entity : PoolableMono
 {
     [Header("Entity")]
 
-    [SerializeField] private EntityType _entityType;
+    [SerializeField] private   EntityType    _entityType;
     [SerializeField] protected BattleRobotSO _robotSO;
 
     #region 컴포넌트 선언
 
-    public Animator AnimatorCompo { get; private set; }
+    public Animator  AnimatorCompo { get; private set; }
     public Rigidbody RigidbodyCompo { get; private set; }
     public EntityMovement EntityMovementCompo { get; private set; }
 
@@ -25,7 +25,7 @@ public abstract class Entity : PoolableMono
 
     protected virtual void Awake()
     {
-        AnimatorCompo = GetComponentInChildren<Animator>();
+        AnimatorCompo  = GetComponentInChildren<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody>();
 
         InitializeStateMachine();

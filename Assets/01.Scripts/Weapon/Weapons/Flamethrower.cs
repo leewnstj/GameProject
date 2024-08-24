@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ProjectEffect;
 
 public class Flamethrower : Weapon
 {
@@ -56,6 +57,11 @@ public class Flamethrower : Weapon
     {
         PoolManager.Push(_currentEffect);
         _currentEffect = null;
+    }
+
+    protected override void ShootProcessing()
+    {
+        throw new System.NotImplementedException();
     }
 
     #endregion

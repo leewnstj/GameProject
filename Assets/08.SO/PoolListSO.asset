@@ -26,7 +26,7 @@ MonoBehaviour:
   ObjectPool:
   - prefab: {fileID: 5013080762558022208, guid: 4196aa643df142448b92accf26dff37f,
       type: 3}
-    poolCount: 50
+    poolCount: 20
   - prefab: {fileID: 3136768465426319215, guid: 0d03c0a570c82594d9286fe73597c474,
       type: 3}
     poolCount: 1
@@ -36,3 +36,6 @@ MonoBehaviour:
   - prefab: {fileID: 6413790632612914578, guid: ff493b9b00a6aca49817ddc459c0f1b4,
       type: 3}
     poolCount: 1
+  - prefab: {fileID: -3989429493175886191, guid: 8406ceb6f3ed5bc4f9c60abce18a4755,
+      type: 3}
+    poolCount: 5

@@ -4,16 +4,16 @@ public abstract class EntityMovement
 {
     private Rigidbody _rigidbodyCompo;
 
+    public EntityMovement(Rigidbody rigidbody)
+    {
+        _rigidbodyCompo = rigidbody;
+    }
+
     public bool IsMove => Direction != Vector2.zero;
 
     public Vector2 Direction { get; private set; }
     public float XInput      { get; private set; }
     public float ZInput      { get; private set; }
-
-    public void Init(Rigidbody rigidbody)
-    {
-        _rigidbodyCompo = rigidbody;
-    }
 
     public void SetDirection(Vector2 direction)
     {

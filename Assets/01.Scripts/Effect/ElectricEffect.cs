@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
+using ProjectEffect;
 
 public class ElectricEffect : Effect
 {
@@ -22,7 +23,7 @@ public class ElectricEffect : Effect
         }
     }
 
-    public void Set(float maxScale)
+    public void SetMaxScale(float maxScale)
     {
         _maxSize = maxScale;
     }

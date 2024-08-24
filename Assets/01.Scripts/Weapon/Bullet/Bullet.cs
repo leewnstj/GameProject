@@ -9,7 +9,7 @@ public class Bullet : PoolableMono
 
     private FeedbackPlayer _feedbackPlayer;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _rigidCompo = GetComponent<Rigidbody>();
         _feedbackPlayer = GetComponentInChildren<FeedbackPlayer>();
@@ -26,6 +26,11 @@ public class Bullet : PoolableMono
     }
 
     private void OnCollisionEnter(Collision collision)
+    {
+        OnHit();
+    }
+
+    protected virtual void OnHit()
     {
         _feedbackPlayer.PlayFeedback();
 

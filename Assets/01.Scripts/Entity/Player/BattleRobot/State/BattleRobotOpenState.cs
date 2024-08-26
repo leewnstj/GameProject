@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRobotOpenState : RobotState
+public class BattleRobotOpenState : PlayerState
 {
     public BattleRobotOpenState(Entity entity, StateMachine stateMachine, string animationBoolName) : base(entity, stateMachine, animationBoolName)
     {
@@ -11,14 +11,13 @@ public class BattleRobotOpenState : RobotState
     public override void Enter()
     {
         base.Enter();
+
+        ExcludingInteraction();
     }
 
     public override void Exit()
     {
         base.Exit();
-
-        _robot.SetTransform(true);
-        _robot.SetRotation(true);
     }
 
     public override void Update()

@@ -15,7 +15,6 @@ public abstract class Entity : PoolableMono
 
     public Animator  AnimatorCompo { get; private set; }
     public Rigidbody RigidbodyCompo { get; private set; }
-    public EntityMovement EntityMovementCompo { get; private set; }
 
     #endregion
 
@@ -27,29 +26,8 @@ public abstract class Entity : PoolableMono
     {
         AnimatorCompo  = GetComponentInChildren<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody>();
-
-        InitializeStateMachine();
+        StateMachine   = new StateMachine();
     }
-
-    private void OnEnable()
-    {
-        SubscribeFunction();
-    }
-
-    private void OnDisable()
-    {
-        UnsubscribeFunction();
-    }
-
-    /// <summary>
-    /// 함수 구독
-    /// </summary>
-    protected abstract void SubscribeFunction();
-
-    /// <summary>
-    /// 함수 구독 해제
-    /// </summary>
-    protected abstract void UnsubscribeFunction();
 
 
     protected virtual void FixedUpdate()
@@ -65,8 +43,6 @@ public abstract class Entity : PoolableMono
     /// </summary>
     protected void InitializeStateMachine()
     {
-        StateMachine = new StateMachine();
-
         foreach (EntityStateEnum stateEnum in Enum.GetValues(typeof(EntityStateEnum)))
         {
             string stateName = stateEnum.ToString();

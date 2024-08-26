@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRobotChangeRollState : RobotState
+public class BattleRobotChangeRollState : PlayerState
 {
     public BattleRobotChangeRollState(Entity entity, StateMachine stateMachine, string animationBoolName) : base(entity, stateMachine, animationBoolName)
     {

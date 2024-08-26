@@ -11,4 +11,7 @@ public class BattleRobotSO : RobotSO
     [Header("Robot Transform")]
     public float TransformTime;
     public float TransformCoolTime;
+
+    [Header("Robot Weapon")]
+    public float ChangWeaponCoolTime;
 }

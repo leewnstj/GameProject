@@ -1,13 +1,8 @@
 using UnityEngine;
 
-public abstract class EntityMovement
+public abstract class EntityMovement : MonoBehaviour
 {
-    private Rigidbody _rigidbodyCompo;
-
-    public EntityMovement(Rigidbody rigidbody)
-    {
-        _rigidbodyCompo = rigidbody;
-    }
+    protected Rigidbody _rigidbodyCompo;
 
     public bool IsMove => Direction != Vector2.zero;
 

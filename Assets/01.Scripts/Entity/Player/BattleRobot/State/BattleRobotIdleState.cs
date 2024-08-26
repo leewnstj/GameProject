@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRobotIdleState : RobotState
+public class BattleRobotIdleState : PlayerState
 {
     public BattleRobotIdleState(Entity entity, StateMachine stateMachine, string animationBoolName) : base(entity, stateMachine, animationBoolName)
     {
@@ -12,7 +12,7 @@ public class BattleRobotIdleState : RobotState
     {
         base.Enter();
 
-        _robot.PlayerMovementCompo.StopImmediately();
+        _movement.StopImmediately();
     }
 
     public override void Exit()
@@ -22,7 +22,7 @@ public class BattleRobotIdleState : RobotState
 
     public override void Update()
     {
-        if(_robot.IsMove)
+        if(_movement.IsMove)
         {
             _stateMachine.ChangeState(EntityStateEnum.Walk);
         }

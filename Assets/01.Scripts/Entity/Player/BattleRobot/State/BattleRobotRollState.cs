@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRobotRollState : RobotState
+public class BattleRobotRollState : PlayerState
 {
     public BattleRobotRollState(Entity entity, StateMachine stateMachine, string animationBoolName) : base(entity, stateMachine, animationBoolName)
     {
@@ -20,6 +20,6 @@ public class BattleRobotRollState : RobotState
 
     public override void Update()
     {
-        _robot.PlayerMovementCompo.Movement(_so.RollSpeed);
+        _movement.Movement(_so.RollSpeed);
     }
 }

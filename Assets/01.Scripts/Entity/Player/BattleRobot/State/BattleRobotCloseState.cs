@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRobotCloseState : RobotState
+public class BattleRobotCloseState : PlayerState
 {
     public BattleRobotCloseState(Entity entity, StateMachine stateMachine, string animationBoolName) : base(entity, stateMachine, animationBoolName)
     {
@@ -12,8 +12,7 @@ public class BattleRobotCloseState : RobotState
     {
         base.Enter();
 
-        _robot.SetTransform(false);
-        _robot.SetRotation(false);
+        ExcludingInteraction();
     }
 
     public override void Exit()

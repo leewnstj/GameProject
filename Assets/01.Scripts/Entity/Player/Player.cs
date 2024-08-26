@@ -1,42 +1,44 @@
+using System;
+using System.Collections.Generic;
+using ComponentPattern;
+
 public class Player : Entity
 {
-    public bool IsMove => PlayerMovementCompo.IsMove;
-
     public BattleRobotSO RobotSO   { get; private set; }
 
-    public  PlayerMovement PlayerMovementCompo { get; private set; }
-    private RobotRotation  RobotRotateCompo;
-    private ChangeWeapon   ChangedWeaponCompo;
+    private Dictionary<Type, IPlayerComponent> _componentDictionary = new();
 
     protected override void Awake()
     {
         base.Awake();
 
-        RobotRotateCompo    = new(transform);
-        ChangedWeaponCompo  = new(PlanetManager.WeaponRegister.WeaponSelectList, _robotSO.TransformCoolTime);
-        PlayerMovementCompo = new(RigidbodyCompo);
-
         RobotSO = Instantiate(_robotSO);
+
+        IPlayerComponent[] compoArr = GetComponentsInChildren<IPlayerComponent>();
+
+        foreach (var component in compoArr)
+        {
+            _componentDictionary.Add(component.GetType(), component);
+        }
+
+        foreach (IPlayerComponent compo in _componentDictionary.Values)
+        {
+            compo.Init(this);
+        }
+
+        InitializeStateMachine();
+    }
+
+    public T GetCompo<T>() where T : class
+    {
+        if (_componentDictionary.TryGetValue(typeof(T), out IPlayerComponent compo))
+            return compo as T;
+
+        return default;
     }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-
-        RobotRotateCompo.RotateTowardsMouse(_robotSO.RotateSpeed);
-    }
-
-    public void SetRotation(bool value) => RobotRotateCompo.SetRotation(value);
-
-    protected override void SubscribeFunction()
-    {
-        InputManager.OnNumberInputEvent += ChangedWeaponCompo.WeaponChange;
-        InputManager.OnMoveEvent        += PlayerMovementCompo.SetDirection;
-    }
-
-    protected override void UnsubscribeFunction()
-    {
-        InputManager.OnNumberInputEvent -= ChangedWeaponCompo.WeaponChange;
-        InputManager.OnMoveEvent        -= PlayerMovementCompo.SetDirection;
     }
 }

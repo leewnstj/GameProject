@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleRobotWalkState : RobotState
+public class BattleRobotWalkState : PlayerState
 {
     public BattleRobotWalkState(Entity entity, StateMachine stateMachine, string animationBoolName) : base(entity, stateMachine, animationBoolName)
     {
@@ -22,7 +22,7 @@ public class BattleRobotWalkState : RobotState
     {
         base.Update();
 
-        if (!_robot.IsMove)
+        if (!_movement.IsMove)
         {
             _stateMachine.ChangeState(EntityStateEnum.Idle);
         }

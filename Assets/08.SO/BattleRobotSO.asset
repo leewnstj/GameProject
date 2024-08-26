@@ -18,3 +18,4 @@ MonoBehaviour:
   RollSpeed: 12
   TransformTime: 1
   TransformCoolTime: 3
+  ChangWeaponCoolTime: 3

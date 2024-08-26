@@ -1,10 +1,22 @@
+using ComponentPattern;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : EntityMovement
+public class PlayerMovement : EntityMovement, IPlayerComponent
 {
-    public PlayerMovement(Rigidbody rigidbody) : base(rigidbody)
+    public void Init(Player component)
     {
+        _rigidbodyCompo = component.RigidbodyCompo;
+    }
+
+    private void OnEnable()
+    {
+        InputManager.OnMoveEvent += SetDirection;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.OnMoveEvent -= SetDirection;
     }
 }

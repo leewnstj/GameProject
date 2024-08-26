@@ -10,6 +10,10 @@ public class State
     protected int _animBoolHash;
     protected bool _triggerCalled = true;
 
+    protected bool _canInteraction = true;
+
+    public bool CanInteraction => _canInteraction;
+
     public State(Entity entity, StateMachine stateMachine, string animationBoolName)
     {
         _animBoolHash = Animator.StringToHash(animationBoolName);
@@ -32,6 +36,11 @@ public class State
     public virtual void Exit()
     {
         _owner.AnimatorCompo.SetBool(_animBoolHash, false);
+    }
+
+    public virtual void ExcludingInteraction()
+    {
+        _canInteraction = false;
     }
 
     public void AnimatorFinishTrigger()

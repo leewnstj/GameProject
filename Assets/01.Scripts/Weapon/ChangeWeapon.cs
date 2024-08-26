@@ -1,20 +1,30 @@
+using ComponentPattern;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class ChangeWeapon
+public class ChangeWeapon : MonoBehaviour, IPlayerComponent
 {
-    private List<WeaponSelect> _weaponSelectList = new();
+    private List<WeaponSelect> _weaponSelectList => PlanetManager.WeaponRegister.WeaponSelectList;
 
     private float _coolTime = 0f;
     private bool _canChangingWeapon = true;
 
-    public ChangeWeapon(List<WeaponSelect> weaponSelectList, float coolTime)
+    public void Init(Player component)
     {
-        _weaponSelectList = weaponSelectList;
-
-        _coolTime = coolTime;
+        _coolTime = component.RobotSO.ChangWeaponCoolTime;
     }
 
-    public void WeaponChange(int inputNumber)
+    private void OnEnable()
+    {
+        InputManager.OnNumberInputEvent += WeaponChange;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.OnNumberInputEvent -= WeaponChange;
+    }
+
+    private void WeaponChange(int inputNumber)
     {
         if (!_canChangingWeapon) return;
 

@@ -1,33 +1,43 @@
+using ComponentPattern;
 using System;
+using System.Collections;
+using UnityEngine;
 
 /// <summary>
 /// 전투 로봇의 모드(전투모드, 공모드)를 바꿔주는 
 /// </summary>
-public class BattleRobotTransform
+public class BattleRobotTransform : MonoBehaviour, IPlayerComponent
 {
     private StateMachine _ownerStateMachine;
     protected float _coolTime;
 
     private bool _coolTimeComplete = true;
-    private bool _canTransform;
+    private bool _canTransform => _ownerStateMachine.CurrentState.CanInteraction;
     private bool _isRobotForm = true;
 
-    public void SetInit(StateMachine owner, float coolTime)
+    public void Init(Player component)
     {
-        _ownerStateMachine = owner;
-
-        _coolTime = coolTime;
+        _ownerStateMachine = component.StateMachine;
+        _coolTime = component.RobotSO.TransformCoolTime;
     }
 
-    public void SetTransform(bool value) => _canTransform = value;
+    private void OnEnable()
+    {
+        InputManager.OnTransformEvent += TransformRobot;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.OnTransformEvent -= TransformRobot;
+    }
 
     public void TransformRobot()
     {
         if (_canTransform)
-            Transforming(_coolTime);
+            Transforming();
     }
 
-    public void Transforming(float transformCoolTime)
+    public void Transforming()
     {
         if (!_coolTimeComplete) return;
 
@@ -39,7 +49,13 @@ public class BattleRobotTransform
 
         SignalHub.OnChangedRobotFormEvent(_isRobotForm);
 
-        CoroutineUtil.CallWaitForSeconds(transformCoolTime, () => _coolTimeComplete = true);
+        StartCoroutine(TransformCoolCoroutine());
+    }
+
+    private IEnumerator TransformCoolCoroutine()
+    {
+        yield return new WaitForSeconds(_coolTime);
+        _coolTimeComplete = true;
     }
 
     private void ChangeStateBasedOnForm()

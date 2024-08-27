@@ -3,17 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRotation : EntityRotation, IPlayerComponent
+public class PlayerRotation : EntityRotation, IEntityComponent
 {
     private float _rotateSpeed;
 
-    public void Init(Player component)
+    public void Init(Entity component)
     {
         SetOwnerTransform(component.transform);
         _rotateSpeed = component.RobotSO.RotateSpeed;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         RotateTowardsMouse();
     }

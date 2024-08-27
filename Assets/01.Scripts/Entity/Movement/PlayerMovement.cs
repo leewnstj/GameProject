@@ -1,11 +1,13 @@
 using ComponentPattern;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class PlayerMovement : EntityMovement, IPlayerComponent
+public class PlayerMovement : EntityMovement, IEntityComponent
 {
-    public void Init(Player component)
+    [SerializeField] private UnityEvent OnMoveEvent = null;
+    [SerializeField] private UnityEvent OnMoveEndEvent = null;
+
+    public void Init(Entity component)
     {
         _rigidbodyCompo = component.RigidbodyCompo;
     }
@@ -18,5 +20,15 @@ public class PlayerMovement : EntityMovement, IPlayerComponent
     private void OnDisable()
     {
         InputManager.OnMoveEvent -= SetDirection;
+    }
+
+    public override void Movement(float speed)
+    {
+        base.Movement(speed);
+
+        if(Direction != Vector2.zero)
+            OnMoveEvent?.Invoke();
+        else
+            OnMoveEndEvent?.Invoke();
     }
 }

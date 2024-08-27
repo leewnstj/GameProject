@@ -5,4 +5,5 @@ public enum EffectEnum
     ElectricEffect,
     FlameThrowerEffect,
     RifleHitEffect,
+    DustEffect,
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 전투 로봇의 모드(전투모드, 공모드)를 바꿔주는 
 /// </summary>
-public class BattleRobotTransform : MonoBehaviour, IPlayerComponent
+public class BattleRobotTransform : MonoBehaviour, IEntityComponent
 {
     private StateMachine _ownerStateMachine;
     protected float _coolTime;
@@ -15,7 +15,7 @@ public class BattleRobotTransform : MonoBehaviour, IPlayerComponent
     private bool _canTransform => _ownerStateMachine.CurrentState.CanInteraction;
     private bool _isRobotForm = true;
 
-    public void Init(Player component)
+    public void Init(Entity component)
     {
         _ownerStateMachine = component.StateMachine;
         _coolTime = component.RobotSO.TransformCoolTime;

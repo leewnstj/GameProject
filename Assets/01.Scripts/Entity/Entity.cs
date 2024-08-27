@@ -1,4 +1,6 @@
+using ComponentPattern;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -20,13 +22,45 @@ public abstract class Entity : PoolableMono
 
     public EntityType EntityType => _entityType;
 
-    public StateMachine StateMachine { get; private set; }
+    public StateMachine  StateMachine { get; private set; }
+    public BattleRobotSO RobotSO { get; private set; }
+
+    private Dictionary<Type, IEntityComponent> _componentDictionary = new();
 
     protected virtual void Awake()
     {
         AnimatorCompo  = GetComponentInChildren<Animator>();
         RigidbodyCompo = GetComponent<Rigidbody>();
         StateMachine   = new StateMachine();
+
+        RobotSO = Instantiate(_robotSO);
+
+        RegisterComponent();
+
+        InitializeStateMachine();
+    }
+
+    protected void RegisterComponent()
+    {
+        IEntityComponent[] compoArr = GetComponentsInChildren<IEntityComponent>();
+
+        foreach (var component in compoArr)
+        {
+            _componentDictionary.Add(component.GetType(), component);
+        }
+
+        foreach (IEntityComponent compo in _componentDictionary.Values)
+        {
+            compo.Init(this);
+        }
+    }
+
+    public T GetCompo<T>() where T : class
+    {
+        if (_componentDictionary.TryGetValue(typeof(T), out IEntityComponent compo))
+            return compo as T;
+
+        return default;
     }
 
 

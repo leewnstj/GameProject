@@ -5,7 +5,5 @@ namespace ComponentPattern
         public void Init(T component);
     }
 
-    public interface IPlayerComponent : IComponent<Player> { }
-
-    public interface IEnemyComponent : IComponent<Player> { }
+    public interface IEntityComponent : IComponent<Entity> { }
 }

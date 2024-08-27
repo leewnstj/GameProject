@@ -2,14 +2,14 @@ using ComponentPattern;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChangeWeapon : MonoBehaviour, IPlayerComponent
+public class ChangeWeapon : MonoBehaviour, IEntityComponent
 {
     private List<WeaponSelect> _weaponSelectList => PlanetManager.WeaponRegister.WeaponSelectList;
 
     private float _coolTime = 0f;
     private bool _canChangingWeapon = true;
 
-    public void Init(Player component)
+    public void Init(Entity component)
     {
         _coolTime = component.RobotSO.ChangWeaponCoolTime;
     }

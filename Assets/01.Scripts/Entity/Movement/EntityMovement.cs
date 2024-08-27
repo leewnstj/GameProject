@@ -18,14 +18,13 @@ public abstract class EntityMovement : MonoBehaviour
         Direction = direction;
     }
 
-    public void Movement(float speed)
+    public virtual void Movement(float speed)
     {
-        if (IsMove)
-        {
-            float y = _rigidbodyCompo.velocity.y;
-
-            _rigidbodyCompo.velocity = new Vector3(XInput * speed, y, ZInput * speed);
-        }
+        if (!IsMove) return;
+        
+        float y = _rigidbodyCompo.velocity.y;
+        
+        _rigidbodyCompo.velocity = new Vector3(XInput * speed, y, ZInput * speed);
     }
 
     public void StopImmediately()

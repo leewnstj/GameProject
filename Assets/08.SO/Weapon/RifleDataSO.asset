@@ -15,7 +15,7 @@ MonoBehaviour:
   Damage: 0
   AmmoCapacity: 100
   WeaponDelay: 0.04
-  SpreadAngle: 10
+  SpreadAngle: 6
   BulletCount: 1
   BulletSpeed: 60
   ReloadTime: 1

@@ -33,7 +33,7 @@ public abstract class Entity : PoolableMono
         RigidbodyCompo = GetComponent<Rigidbody>();
         StateMachine   = new StateMachine();
 
-        RobotSO = Instantiate(_robotSO);
+        RobotSO        = Instantiate(_robotSO);
 
         RegisterComponent();
 

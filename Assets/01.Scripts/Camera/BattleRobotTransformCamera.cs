@@ -17,7 +17,7 @@ public class BattleRobotTransformCamera : MonoBehaviour
 
     private void ChangeCamera(bool robotForm)
     {
-        if(robotForm)
+        if(!robotForm)
         {
             CameraManager.CommondCamera.SetCamera(transform);
         }

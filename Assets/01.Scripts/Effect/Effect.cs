@@ -4,9 +4,9 @@ namespace ProjectEffect
 {
     public class Effect : PoolableMono
     {
+        private ParticleSystem _particleSystem;
         public float Duration => _particleSystem.main.duration;
 
-        private ParticleSystem _particleSystem;
 
         private void Awake()
         {

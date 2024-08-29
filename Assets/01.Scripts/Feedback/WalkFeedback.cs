@@ -31,8 +31,11 @@ public class WalkFeedback : Feedback
     private IEnumerator EffectPushCoroutine()
     {
         yield return new WaitForSeconds(_effect.Duration);
-        PoolManager.Push(_effect);
-        _effect = null;
+        if(_effect != null)
+        {
+            PoolManager.Push(_effect);
+            _effect = null;
+        }
     }
 
     public override void FinishFeedback()

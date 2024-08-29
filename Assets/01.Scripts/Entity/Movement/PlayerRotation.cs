@@ -23,11 +23,15 @@ public class PlayerRotation : EntityRotation, IEntityComponent
         if (!_canRotation) return;
 
         Vector3 mousePos = Input.mousePosition;
-        mousePos.z = Camera.main.transform.position.y - _ownerTrm.position.y;
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
+        Ray cameraRay = Camera.main.ScreenPointToRay(mousePos);
+        RaycastHit hit;
 
-        _direction = (mouseWorldPos - _ownerTrm.position).normalized;
+        if (Physics.Raycast(cameraRay, out hit, Camera.main.farClipPlane))
+        {
+            _direction = hit.point - _ownerTrm.position;
+            _direction.y = 0;
 
-        Rotation(_rotateSpeed);
+            Rotation(_rotateSpeed);
+        }
     }
 }

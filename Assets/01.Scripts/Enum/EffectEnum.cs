@@ -6,4 +6,6 @@ public enum EffectEnum
     FlameThrowerEffect,
     RifleHitEffect,
     DustEffect,
+    SmallExplosion,
+    BigExplosion
 }

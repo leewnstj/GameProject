@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class Bullet : PoolableMono
@@ -17,13 +15,6 @@ public class Bullet : PoolableMono
         _feedbackPlayer = GetComponentInChildren<FeedbackPlayer>();
     }
 
-    private IEnumerator TimeToDestoryCoroutine()
-    {
-        yield return new WaitForSeconds(_timeToDestroy);
-
-        OnHit();
-    }
-
     public void Setting(LayerMask target)
     {
         _targetLayer = target;
@@ -32,8 +23,6 @@ public class Bullet : PoolableMono
     public void Fire(Vector3 direction)
     {
         _rigidCompo.AddForce(direction, ForceMode.Impulse);
-
-        StartCoroutine(TimeToDestoryCoroutine());
     }
 
     private void OnCollisionEnter(Collision collision)
